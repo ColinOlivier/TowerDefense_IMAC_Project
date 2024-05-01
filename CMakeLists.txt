@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.27)
 
 # Be nice to visual studio
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -107,7 +107,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE img::img)
 # Optional library for rendering text
 FetchContent_Declare(
     simpletext
-    GIT_REPOSITORY https://github.com/dsmtE/SimpleText/
+    GIT_REPOSITORY https://github.com/ColinOlivier/SimpleText/
 )
 
 FetchContent_MakeAvailable(simpletext)
