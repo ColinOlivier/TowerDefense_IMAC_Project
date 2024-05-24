@@ -5,10 +5,14 @@
 #include <img/img.hpp>
 
 #include <sstream>
+#include <iostream>
 
 #include "simpletext.h"
 #include "utils.hpp"
 #include "GLHelpers.hpp"
+#include "Tile.hpp"
+#include "IDTReader.hpp"
+#include "MapDataReader.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0) {
    // load what needs to be loaded here (for example textures)
@@ -27,6 +31,14 @@ void App::setup() {
     TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
     TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer.EnableBlending(true);
+
+    IDTReader idtReader;
+    MapDataReader mapDataReader;
+
+    std::vector<std::pair<Color, TileType>> colorCorrespondences = idtReader.getColorCorrespondence("../../data/map.idt");
+    vecTileType = mapDataReader.getVectorofTileType("../../images/map.png", colorCorrespondences);
+
+    tileDrawer.setup();
 }
 
 void App::update() {
@@ -56,11 +68,20 @@ void App::render() {
         glVertex2f(-0.5f, 0.5f);
     glEnd();
 
-    glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-    draw_quad_with_texture(_texture);
-    glPopMatrix();
+    // glPushMatrix();
+    // glScalef(0.8f, 0.8f, 0.8f);
+    // glRotatef(_angle, 0.0f, 0.0f, 1.0f);
+    // draw_quad_with_texture(_texture);
+    // glPopMatrix();
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        for (size_t j = 0; j < 10; j++)
+        {
+            tileDrawer.drawTile(Tile{ { (float)i, (float)j }, vecTileType[j * 10 + i] });
+        }
+    }
+
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
 

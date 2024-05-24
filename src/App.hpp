@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
+#include "TileDrawer.hpp"
 
 class App {
 public:
@@ -29,5 +30,8 @@ private:
     GLuint _texture {};
     float _angle {};
 
-    SimpleText TextRenderer {};
+    SimpleText TextRenderer{};
+    TileDrawer tileDrawer{};
+    std::vector<TileType> vecTileType{};
+
 };
