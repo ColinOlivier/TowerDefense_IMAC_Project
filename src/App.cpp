@@ -10,10 +10,17 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
-App::App() : _previousTime(0.0), _viewSize(2.0) {
+#include "towerDrawer.hpp"
+#include "towerHandler.hpp"
+
+TowerDrawer drawTower{};
+TowerHandler towerHandler{};
+
+App::App() : _previousTime(0.0), _viewSize(2.0)
+{
    // load what needs to be loaded here (for example textures)
 
-    img::Image test {img::load(make_absolute_path("images/level.png", true), 3, true)};
+    img::Image test{img::load(make_absolute_path("images/level.png", true), 4, true)};
     
     _texture = loadTexture(test);
 }
@@ -27,6 +34,8 @@ void App::setup() {
     TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::WHITE);
     TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer.EnableBlending(true);
+
+    drawTower.setup();
 }
 
 void App::update() {
@@ -45,6 +54,10 @@ void App::render() {
     // Clear the color and depth buffers of the frame buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glLoadIdentity();
 
     // render exemple quad
@@ -56,11 +69,13 @@ void App::render() {
         glVertex2f(-0.5f, 0.5f);
     glEnd();
 
-    glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-    draw_quad_with_texture(_texture);
-    glPopMatrix();
+    // glPushMatrix();
+    // glScalef(0.8f, 0.8f, 0.8f);
+    // glRotatef(_angle, 0.0f, 0.0f, 1.0f);
+    // draw_quad_with_texture(_texture);
+    // glPopMatrix();
+    
+    drawTower.render();
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
 
@@ -83,7 +98,10 @@ void App::render() {
 void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/) {
 }
 
-void App::mouse_button_callback(int /*button*/, int /*action*/, int /*mods*/) {
+void App::mouse_button_callback(int button, int action, int mods)
+{
+    std::cout << "Colin youpi" << std::endl;
+    drawTower.vecTower.push_back(Tower{});
 }
 
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/) {
