@@ -1,9 +1,11 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "utils.hpp"
 
 struct Tower
 {
+    Position positionTower;
     //int prix;
     int power; // si la tour est de puissance 5 elle enlève 5 vies à l'ennemi
     float rangeShot; // portée de tir = nombre de pixel ?

@@ -3,20 +3,21 @@
 
 Tower TowerHandler::generateTower(TowerType type)
 {
+    float x, y;
     Tower tower{};
     if(type == TowerType::basicTower)
     {
-        tower = {5, 25, 0.5};
+        tower = {x, y, 5, 25, 0.5};
     }
     else if(type == TowerType::pineappleTower)
     {
-        tower = {15, 10, 2};
+        tower = {x, y, 15, 10, 2};
     }
     else if(type == TowerType::hiveTower)
     {
-        tower = {20, 15, 0.25};
+        tower = {x, y, 20, 15, 0.25};
     }
-};
+}
 
 std::vector<Tower> TowerHandler::generateTowers(TowerType type, int numberTower)
 {
@@ -26,4 +27,4 @@ std::vector<Tower> TowerHandler::generateTowers(TowerType type, int numberTower)
         listTowers.push_back(generateTower(type));
     }
     return listTowers; 
-};
+}

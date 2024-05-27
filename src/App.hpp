@@ -17,6 +17,7 @@ public:
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(double xpos, double ypos);
     void size_callback(int width, int height);
+    double _xPosCur, _yPosCur;
 
 private:
     void render();
@@ -25,6 +26,7 @@ private:
     int _height {};
     double _previousTime {};
     float _viewSize {};
+
 
     // Add your variables here
     GLuint _texture {};

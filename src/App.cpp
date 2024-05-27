@@ -16,6 +16,7 @@
 
 #include "towerDrawer.hpp"
 #include "towerHandler.hpp"
+#include "tower.hpp"
 
 TowerDrawer drawTower{};
 TowerHandler towerHandler{};
@@ -29,7 +30,8 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
     _texture = loadTexture(test);
 }
 
-void App::setup() {
+void App::setup()
+{
     // Set the clear color to a nice blue
     glClearColor(0.0f, 0.0f, 0.4f, 1.0f);
 
@@ -49,7 +51,8 @@ void App::setup() {
     drawTower.setup();
 }
 
-void App::update() {
+void App::update()
+{
 
     const double currentTime{ glfwGetTime() };
     const double elapsedTime{ currentTime - _previousTime };
@@ -61,7 +64,8 @@ void App::update() {
     render();
 }
 
-void App::render() {
+void App::render()
+{
     // Clear the color and depth buffers of the frame buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -115,19 +119,39 @@ void App::render() {
     TextRenderer.Render();
 }
 
-void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/) {
+void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/)
+{
 }
 
 void App::mouse_button_callback(int button, int action, int mods)
 {
-    std::cout << "Colin youpi" << std::endl;
-    drawTower.vecTower.push_back(Tower{});
+    if(button != GLFW_MOUSE_BUTTON_LEFT || action != GLFW_PRESS)
+    {
+        return;
+    }
+    if(drawTower.vecTower.size() >= 6)
+    {
+        return;
+    }
+    Position positionTower;
+    positionTower.x = _xPosCur/_width;
+    positionTower.y = _yPosCur/_height;
+    // std::cout << positionTower.x << " ; " << positionTower.y << std::endl;
+    std::cout << (_xPosCur/_width)*10 << " ; " << (_yPosCur/_height)*10 << std::endl;
+
+    Tower newTower{};
+    newTower.positionTower = positionTower;
+    drawTower.vecTower.push_back(newTower);
 }
 
-void App::scroll_callback(double /*xoffset*/, double /*yoffset*/) {
+void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
+{
 }
 
-void App::cursor_position_callback(double /*xpos*/, double /*ypos*/) {
+void App::cursor_position_callback(double xpos, double ypos)
+{
+    _xPosCur = xpos;
+    _yPosCur = ypos;
 }
 
 void App::size_callback(int width, int height) {
@@ -149,4 +173,3 @@ void App::size_callback(int width, int height) {
         glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
     }
 }
-
