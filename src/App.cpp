@@ -155,13 +155,6 @@ void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
 {
 }
 
-void App::cursor_position_callback(double /*xpos*/, double /*ypos*/)
-{
-}
-
-void App::size_callback(int width, int height)
-{
-}
 void App::cursor_position_callback(double xpos, double ypos)
 {
     _xPosCur = xpos;
@@ -176,7 +169,6 @@ void App::size_callback(int width, int height)
     // make sure the viewport matches the new window dimensions
     glViewport(0, 0, _width, _height);
 
-    const float aspectRatio{_width / (float)_height};
     const float aspectRatio{_width / (float)_height};
 
     // Change the projection matrix
