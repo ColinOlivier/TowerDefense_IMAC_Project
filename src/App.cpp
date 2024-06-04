@@ -25,9 +25,11 @@ App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
-    img::Image test{ img::load(make_absolute_path("images/level.png", true), 4, true) };
+    img::Image test{img::load(make_absolute_path("images/level.png", true), 4, true)};
 
     _texture = loadTexture(test);
+
+    enemyHandler = EnemyHandler();
 }
 
 void App::setup()
@@ -49,17 +51,21 @@ void App::setup()
 
     tileDrawer.setup();
     drawTower.setup();
+    enemyHandler.setup();
 }
 
 void App::update()
 {
 
-    const double currentTime{ glfwGetTime() };
-    const double elapsedTime{ currentTime - _previousTime };
+    const double currentTime{glfwGetTime()};
+    const double elapsedTime{currentTime - _previousTime};
     _previousTime = currentTime;
 
     _angle += 10.0f * elapsedTime;
-    // _angle = std::fmod(_angle, 360.0f);
+    // float time{(float)glfwGetTime()};
+
+    // // _angle = std::fmod(_angle, 360.0f);
+    enemyHandler.update();
 
     render();
 }
@@ -94,10 +100,9 @@ void App::render()
     {
         for (size_t j = 0; j < 10; j++)
         {
-            tileDrawer.drawTile(Tile{ { (float)i, (float)j }, vecTileType[j * 10 + i] });
+            tileDrawer.drawTile(Tile{{(float)i, (float)j}, vecTileType[j * 10 + i]});
         }
     }
-
 
     drawTower.render();
 
@@ -117,6 +122,8 @@ void App::render()
     TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
     TextRenderer.Render();
+
+    enemyHandler.render();
 }
 
 void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods*/)
@@ -125,19 +132,19 @@ void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods
 
 void App::mouse_button_callback(int button, int action, int mods)
 {
-    if(button != GLFW_MOUSE_BUTTON_LEFT || action != GLFW_PRESS)
+    if (button != GLFW_MOUSE_BUTTON_LEFT || action != GLFW_PRESS)
     {
         return;
     }
-    if(drawTower.vecTower.size() >= 6)
+    if (drawTower.vecTower.size() >= 6)
     {
         return;
     }
     Position positionTower;
-    positionTower.x = _xPosCur/_width;
-    positionTower.y = _yPosCur/_height;
+    positionTower.x = _xPosCur / _width;
+    positionTower.y = _yPosCur / _height;
     // std::cout << positionTower.x << " ; " << positionTower.y << std::endl;
-    std::cout << (_xPosCur/_width)*10 << " ; " << (_yPosCur/_height)*10 << std::endl;
+    std::cout << (_xPosCur / _width) * 10 << " ; " << (_yPosCur / _height) * 10 << std::endl;
 
     Tower newTower{};
     newTower.positionTower = positionTower;
@@ -154,22 +161,32 @@ void App::cursor_position_callback(double xpos, double ypos)
     _yPosCur = ypos;
 }
 
-void App::size_callback(int width, int height) {
+void App::size_callback(int width, int height)
+{
     _width = width;
     _height = height;
 
     // make sure the viewport matches the new window dimensions
     glViewport(0, 0, _width, _height);
 
-    const float aspectRatio{ _width / (float)_height };
+    const float aspectRatio{_width / (float)_height};
 
     // Change the projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    if (aspectRatio > 1.0f) {
+    if (aspectRatio > 1.0f)
+    {
         glOrtho(-_viewSize / 2.0f * aspectRatio, _viewSize / 2.0f * aspectRatio, -_viewSize / 2.0f, _viewSize / 2.0f, -1.0f, 1.0f);
     }
-    else {
-        glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
+    else
+    {
+        if (aspectRatio > 1.0f)
+        {
+            glOrtho(-_viewSize / 2.0f * aspectRatio, _viewSize / 2.0f * aspectRatio, -_viewSize / 2.0f, _viewSize / 2.0f, -1.0f, 1.0f);
+        }
+        else
+        {
+            glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
+        }
     }
 }

@@ -4,7 +4,7 @@
 
 void TileDrawer::setup() {
     for (const auto& [key, value] : tileTypeTextureFileName) {
-        img::Image image{ img::load(value, 3, true) };
+        img::Image image{ img::load(value, 4, true) };
         tileTypeTextureID[key] = loadTexture(image);
     }
 }

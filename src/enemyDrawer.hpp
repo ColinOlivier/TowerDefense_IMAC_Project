@@ -1,14 +1,16 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <simpletext.h>
 
-struct enemyDrawer
+#include "enemy.hpp"
+
+struct EnemyDrawer
 {
-    void drawEnemy();
+    GLuint _texture{};
+
+    void loadEnemyTexture();
+    void drawEnemy(Enemy &enemy);
     void setup();
     void update();
     void render();
-
-    GLuint _texture{};
 };

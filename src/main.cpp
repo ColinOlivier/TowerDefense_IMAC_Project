@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include "App.hpp"
-#include "enemyDrawer.hpp"
 
 namespace
 {
@@ -61,7 +60,6 @@ int main()
     }
 
     App app{};
-    enemyDrawer enemy{};
 
     glfwSetWindowUserPointer(window, &app);
 
@@ -84,7 +82,6 @@ int main()
     }
 
     app.setup();
-    enemy.setup();
 
     // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
@@ -94,7 +91,6 @@ int main()
         double startTime{glfwGetTime()};
 
         app.update();
-        enemy.update();
 
         // Swap front and back buffers
         glfwSwapBuffers(window);
