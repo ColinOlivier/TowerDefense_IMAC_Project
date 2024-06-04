@@ -67,7 +67,7 @@ std::vector<std::pair<Color, TileType>> IDTReader::getColorCorrespondence(std::s
 
 TileType IDTReader::getTileTypeByName(std::string str) {
     if (str == "path")
-        return TileType::PATH;
+        return TileType::PATH_CROSSROAD_DOWN;
     else if (str == "in")
         return TileType::IN;
     else if (str == "out")
