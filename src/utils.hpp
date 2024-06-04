@@ -1,4 +1,5 @@
 #pragma once
+
 #include <filesystem>
 #include <glm/glm.hpp>
 
@@ -38,3 +39,9 @@ struct Position
 {
     float x{0}, y{0};
 };
+
+bool operator==(Position const &begin, Position const &end);
+Position operator*(Position const &begin, float const f);
+Position operator*(float const f, Position const &position);
+Position operator+(Position const &begin, Position const &end);
+Position operator-(Position const &begin, Position const &end);
