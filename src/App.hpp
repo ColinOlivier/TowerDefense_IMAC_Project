@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
+#include "TileDrawer.hpp"
 
 #include "enemyHandler.hpp"
 
@@ -19,6 +20,7 @@ public:
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(double xpos, double ypos);
     void size_callback(int width, int height);
+    double _xPosCur, _yPosCur;
 
 private:
     void render();
@@ -35,4 +37,6 @@ private:
     SimpleText TextRenderer{};
 
     EnemyHandler enemyHandler;
+    TileDrawer tileDrawer{};
+    std::vector<TileType> vecTileType{};
 };

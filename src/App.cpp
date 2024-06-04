@@ -10,6 +10,16 @@
 #include "simpletext.h"
 #include "utils.hpp"
 #include "GLHelpers.hpp"
+#include "Tile.hpp"
+#include "IDTReader.hpp"
+#include "MapDataReader.hpp"
+
+#include "towerDrawer.hpp"
+#include "towerHandler.hpp"
+#include "tower.hpp"
+
+TowerDrawer drawTower{};
+TowerHandler towerHandler{};
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
@@ -33,6 +43,14 @@ void App::setup()
     TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
     TextRenderer.EnableBlending(true);
 
+    IDTReader idtReader;
+    MapDataReader mapDataReader;
+
+    std::vector<std::pair<Color, TileType>> colorCorrespondences = idtReader.getColorCorrespondence("../../data/map.idt");
+    vecTileType = mapDataReader.getVectorofTileType("../../images/map.png", colorCorrespondences);
+
+    tileDrawer.setup();
+    drawTower.setup();
     enemyHandler.setup();
 }
 
@@ -72,11 +90,21 @@ void App::render()
     glVertex2f(-0.5f, 0.5f);
     glEnd();
 
-    glPushMatrix();
-    glScalef(0.8f, 0.8f, 0.8f);
-    glRotatef(_angle, 0.0f, 0.0f, 1.0f);
-    draw_quad_with_texture(_texture);
-    glPopMatrix();
+    // glPushMatrix();
+    // glScalef(0.8f, 0.8f, 0.8f);
+    // glRotatef(_angle, 0.0f, 0.0f, 1.0f);
+    // draw_quad_with_texture(_texture);
+    // glPopMatrix();
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        for (size_t j = 0; j < 10; j++)
+        {
+            tileDrawer.drawTile(Tile{{(float)i, (float)j}, vecTileType[j * 10 + i]});
+        }
+    }
+
+    drawTower.render();
 
     TextRenderer.Label("Example of using SimpleText library", _width / 2, 20, SimpleText::CENTER);
 
@@ -102,8 +130,25 @@ void App::key_callback(int /*key*/, int /*scancode*/, int /*action*/, int /*mods
 {
 }
 
-void App::mouse_button_callback(int /*button*/, int /*action*/, int /*mods*/)
+void App::mouse_button_callback(int button, int action, int mods)
 {
+    if (button != GLFW_MOUSE_BUTTON_LEFT || action != GLFW_PRESS)
+    {
+        return;
+    }
+    if (drawTower.vecTower.size() >= 6)
+    {
+        return;
+    }
+    Position positionTower;
+    positionTower.x = _xPosCur / _width;
+    positionTower.y = _yPosCur / _height;
+    // std::cout << positionTower.x << " ; " << positionTower.y << std::endl;
+    std::cout << (_xPosCur / _width) * 10 << " ; " << (_yPosCur / _height) * 10 << std::endl;
+
+    Tower newTower{};
+    newTower.positionTower = positionTower;
+    drawTower.vecTower.push_back(newTower);
 }
 
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)
@@ -116,12 +161,22 @@ void App::cursor_position_callback(double /*xpos*/, double /*ypos*/)
 
 void App::size_callback(int width, int height)
 {
+}
+void App::cursor_position_callback(double xpos, double ypos)
+{
+    _xPosCur = xpos;
+    _yPosCur = ypos;
+}
+
+void App::size_callback(int width, int height)
+{
     _width = width;
     _height = height;
 
     // make sure the viewport matches the new window dimensions
     glViewport(0, 0, _width, _height);
 
+    const float aspectRatio{_width / (float)_height};
     const float aspectRatio{_width / (float)_height};
 
     // Change the projection matrix
@@ -133,6 +188,13 @@ void App::size_callback(int width, int height)
     }
     else
     {
-        glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
+        if (aspectRatio > 1.0f)
+        {
+            glOrtho(-_viewSize / 2.0f * aspectRatio, _viewSize / 2.0f * aspectRatio, -_viewSize / 2.0f, _viewSize / 2.0f, -1.0f, 1.0f);
+        }
+        else
+        {
+            glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
+        }
     }
 }
