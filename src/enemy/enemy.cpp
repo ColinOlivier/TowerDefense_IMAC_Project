@@ -1,5 +1,5 @@
 #include "utils.hpp"
-#include "enemy.hpp"
+#include "enemy/enemy.hpp"
 
 #include <iostream>
 #include <queue>

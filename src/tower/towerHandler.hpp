@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "tower.hpp"
+#include "tower/tower.hpp"
 
 struct TowerHandler
 {

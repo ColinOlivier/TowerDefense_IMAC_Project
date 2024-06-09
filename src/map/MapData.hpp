@@ -1,11 +1,11 @@
 #pragma once
 
 #include <array>
-#include "Tile.hpp"
+#include "map/tile/TileData.hpp"
 
 #define GRID_SIZE  10
 
-struct Map
+struct MapData
 {
     int gridSize{ GRID_SIZE * GRID_SIZE };
     int gridWeight{ GRID_SIZE };

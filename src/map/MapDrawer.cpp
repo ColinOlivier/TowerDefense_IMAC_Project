@@ -1,7 +1,7 @@
 #include <img/img.hpp>
-#include "MapDrawer.hpp"
+#include "map/MapDrawer.hpp"
 
-void MapDrawer::displayMap(Map map) {
+void MapDrawer::displayMap(MapData map) {
     //
 }
 

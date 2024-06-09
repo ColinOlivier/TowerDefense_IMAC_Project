@@ -1,5 +1,5 @@
-#include "towerHandler.hpp"
-#include "tower.hpp"
+#include "tower/towerHandler.hpp"
+#include "tower/tower.hpp"
 
 Tower TowerHandler::generateTower(TowerType type)
 {

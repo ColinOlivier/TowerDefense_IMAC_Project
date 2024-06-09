@@ -10,13 +10,13 @@
 #include "simpletext.h"
 #include "utils.hpp"
 #include "GLHelpers.hpp"
-#include "Tile.hpp"
-#include "IDTReader.hpp"
-#include "MapDataReader.hpp"
+#include "map/tile/TileData.hpp"
+#include "fileReader/IDTReader.hpp"
+#include "map/MapDataReader.hpp"
 
-#include "towerDrawer.hpp"
-#include "towerHandler.hpp"
-#include "tower.hpp"
+#include "tower/towerDrawer.hpp"
+#include "tower/towerHandler.hpp"
+#include "tower/tower.hpp"
 
 TowerDrawer drawTower{};
 TowerHandler towerHandler{};

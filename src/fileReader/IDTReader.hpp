@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Map.hpp"
-#include "Tile.hpp"
+#include "map/MapData.hpp"
+#include "map/tile/TileData.hpp"
 
 #include <fstream> 
 #include <vector> 

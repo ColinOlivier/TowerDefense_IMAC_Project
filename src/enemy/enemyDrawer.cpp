@@ -1,4 +1,4 @@
-#include "enemyDrawer.hpp"
+#include "enemy/enemyDrawer.hpp"
 #include "App.hpp"
 
 #include <glad/glad.h>

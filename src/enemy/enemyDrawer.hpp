@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "enemy.hpp"
+#include "enemy/enemy.hpp"
 
 struct EnemyDrawer
 {

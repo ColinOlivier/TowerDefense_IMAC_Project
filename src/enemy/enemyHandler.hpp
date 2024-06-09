@@ -1,7 +1,7 @@
 #pragma once
 
-#include "enemy.hpp"
-#include "enemyDrawer.hpp"
+#include "enemy/enemy.hpp"
+#include "enemy/enemyDrawer.hpp"
 
 #include <vector>
 

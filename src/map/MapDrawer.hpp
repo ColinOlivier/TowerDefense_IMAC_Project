@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "utils.hpp"
-#include "Map.hpp"
+#include "map/MapData.hpp"
 
 enum class Direction {
     UP,
@@ -18,5 +18,5 @@ struct MapDrawer
 {
     std::unordered_map<std::pair<Tile, Direction>, GLuint> unmapTileSprite;
     void setupSprite(std::filesystem::path path);
-    void displayMap(Map map);
+    void displayMap(MapData map);
 };

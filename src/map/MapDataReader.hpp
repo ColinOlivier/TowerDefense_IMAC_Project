@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Tile.hpp"
-#include "IDTReader.hpp"
+#include "map/tile/TileData.hpp"
+#include "fileReader/IDTReader.hpp"
 
 struct MapDataReader
 {

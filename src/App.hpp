@@ -2,9 +2,9 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
-#include "TileDrawer.hpp"
+#include "map/tile/TileDrawer.hpp"
 
-#include "enemyHandler.hpp"
+#include "enemy/enemyHandler.hpp"
 
 class App
 {

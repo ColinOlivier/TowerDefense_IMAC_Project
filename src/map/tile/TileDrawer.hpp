@@ -2,7 +2,7 @@
 
 #include <map>
 
-#include "Tile.hpp"
+#include "map/tile/TileData.hpp"
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 

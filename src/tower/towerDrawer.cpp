@@ -1,8 +1,8 @@
-#include "towerDrawer.hpp"
-#include "towerHandler.hpp"
+#include "tower/towerDrawer.hpp"
+#include "tower/towerHandler.hpp"
 #include "App.hpp"
 #include "utils.hpp"
-#include "tower.hpp"
+#include "tower/tower.hpp"
 #include "GLHelpers.hpp"
 #include "simpletext.h"
 #include <sstream>
