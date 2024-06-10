@@ -30,7 +30,7 @@ void EnemyDrawer::drawEnemy(Enemy &enemy)
         enemy.position.x,
         enemy.position.y,
         0.f);
-    glScalef(0.1f, 0.2f, 0.1f);
+    glScalef(0.08f, 0.15f, 0.08f);
     draw_quad_with_texture(_texture);
     glPopMatrix();
 }

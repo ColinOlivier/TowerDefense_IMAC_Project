@@ -1,37 +1,42 @@
-#include "enemy/enemyHandler.hpp"
+#include "enemyHandler.hpp"
 #include <GLFW/glfw3.h>
 #include <ctime>
 #include <iostream>
+#include <cstdlib>
 
-Enemy EnemyHandler::generateEnemy(Name name)
+Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
 {
-    Enemy enemy{};
+    Enemy enemy{name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
+
     if (name == Name::Milan)
     {
-        enemy = {name, {0, 0}, 10, 0.1f, 5};
+        enemy = {name, initialOffset, 10, 0.1f, 5};
     }
 
     if (name == Name::Guimiel)
     {
-        enemy = {name, {0, 0}, 10, 5, 5};
+        enemy = {name, initialOffset, 10, 5, 5};
     }
 
     if (name == Name::Elea)
     {
-        enemy = {name, {0, 0}, 10, 5, 5};
+        enemy = {name, initialOffset, 10, 5, 5};
     }
+
     return enemy;
-};
+}
 
 std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies)
 {
     std::vector<Enemy> listEnemies{};
-    for (int i{0}; i < numberEnemies; i++)
+    float offsetStep = 0.2f; // Distance entre les ennemis
+    for (int i = 0; i < numberEnemies; i++)
     {
-        listEnemies.push_back(generateEnemy(name));
+        Position offset{offsetStep * i, 0}; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
+        listEnemies.push_back(generateEnemy(name, offset));
     }
     return listEnemies;
-};
+}
 
 void EnemyHandler::setup()
 {
@@ -41,7 +46,7 @@ void EnemyHandler::setup()
     listEnemies = generateEnemies(Name::Milan, 3);
 
     // positionQueue = données Colin
-    positionQueue.push({0, 1.5});
+    positionQueue.push({0, 0.5});
     positionQueue.push({0., 0});
     positionQueue.push({-0.5, -0.25});
     positionQueue.push({0.25, 0.5});
@@ -51,18 +56,30 @@ void EnemyHandler::setup()
 
 void EnemyHandler::update()
 {
-    std::srand(std::time(nullptr)); // use current time as seed for random generator
-    float random_value = rand();
-
     // Move
     const float currentTime{(float)glfwGetTime()};
-    std::cout << currentTime << std::endl;
-    double ellapsedTime{(currentTime - previousTime)};
+    double ellapsedTime{currentTime - previousTime};
     previousTime = currentTime;
+
+    std::vector<size_t> deadEnemiesIndices;
+
     for (size_t i = 0; i < listEnemies.size(); i++)
     {
-        float time = float(ellapsedTime) + std::rand() * 0.000001f;
-        listEnemies[i].queueMove(time /*borne 0 et 1*/, positionQueue /*recup queue colin*/);
+        float time = static_cast<float>(ellapsedTime);
+        listEnemies[i].queueMove(time, positionQueue);
+        // Générer des dégâts aléatoires entre 0 et 1
+        float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
+        listEnemies[i].hurt(randomDamage);
+        if (listEnemies[i].isDead)
+        {
+            deadEnemiesIndices.push_back(i);
+        }
+    }
+
+    // Supprimer les ennemis morts en partant de la fin pour éviter les problèmes d'indices
+    for (auto it = deadEnemiesIndices.rbegin(); it != deadEnemiesIndices.rend(); ++it)
+    {
+        listEnemies.erase(listEnemies.begin() + *it);
     }
 }
 
