@@ -1,9 +1,15 @@
 #include "tower/tower.hpp"
+#include "tower/attack/attackHandler.hpp"
+#include "tower/attack/attackDrawer.hpp"
+#include "tower/attack/attack.hpp"
 
-int Tower::shot()
+Attack Tower::shot()
 {
-    // tire sur les ennemis et renvoie le nombre de vie restant de l'ennemi
-    return 0;
+    AttackHandler attackHandler;
+    attackHandler.setup();
+    // tire sur les ennemis 
+    attackHandler.update();
+    attackHandler.render();
 }
 
 void Tower::render()

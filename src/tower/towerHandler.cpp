@@ -30,3 +30,4 @@ std::vector<Tower> TowerHandler::generateTowers(TowerType type, int numberTower)
     }
     return listTowers;
 }
+

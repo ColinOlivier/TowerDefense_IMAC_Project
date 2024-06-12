@@ -35,7 +35,8 @@ void TowerDrawer::render()
             vecTower[i].positionTower.y * (-2) + 1,
             0.0f);
         // glTranslatef(1.f, 1.f, 0.0f);
-        glScalef(0.2f, 0.27f, 0.4f);
+        glScalef(0.4f, 0.47f, 0.4f);
+        vecTower[i].shot();
         draw_quad_with_texture(_texture);
         glPopMatrix();
     }
