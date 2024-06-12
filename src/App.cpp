@@ -18,6 +18,8 @@
 #include "tower/towerHandler.hpp"
 #include "tower/tower.hpp"
 
+#include "player/player.hpp"
+
 TowerDrawer drawTower{};
 TowerHandler towerHandler{};
 

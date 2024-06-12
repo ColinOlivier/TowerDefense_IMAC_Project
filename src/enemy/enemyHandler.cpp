@@ -1,4 +1,5 @@
 #include "enemyHandler.hpp"
+#include "player/player.hpp"
 #include <GLFW/glfw3.h>
 #include <ctime>
 #include <iostream>
@@ -69,7 +70,7 @@ void EnemyHandler::update()
         listEnemies[i].queueMove(time, positionQueue);
         // Générer des dégâts aléatoires entre 0 et 1
         float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
-        listEnemies[i].hurt(randomDamage);
+        listEnemies[0].hurt(randomDamage);
         if (listEnemies[i].isDead)
         {
             deadEnemiesIndices.push_back(i);
