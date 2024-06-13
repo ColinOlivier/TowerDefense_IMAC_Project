@@ -10,7 +10,7 @@
 
 void TowerDrawer::loadTowerTexture()
 {
-    img::Image tour{img::load(make_absolute_path("images/Tour1.png", true), 4, true)};
+    img::Image tour{ img::load(make_absolute_path("images/Towers/Tour1.png", true), 4, true) };
     _texture = loadTexture(tour);
 }
 

@@ -13,7 +13,7 @@
 
 void EnemyDrawer::loadEnemyTexture()
 {
-    img::Image test{img::load(make_absolute_path("images/milan.png", true), 4, true)};
+    img::Image test{ img::load(make_absolute_path("images/Characters/milan.png", true), 4, true) };
     _texture = loadTexture(test);
 }
 
