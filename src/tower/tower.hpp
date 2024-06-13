@@ -14,7 +14,7 @@ struct Tower
     void setup();
     void update();
     void render();
-    Attack shot(); // tire sur les ennemis et renvoie le nombre de vie restant de l'ennemi
+    void shot(); // tire sur les ennemis et renvoie le nombre de vie restant de l'ennemi
 };
 
 enum class TowerType

@@ -3,7 +3,7 @@
 #include "tower/attack/attackDrawer.hpp"
 #include "tower/attack/attack.hpp"
 
-Attack Tower::shot()
+void Tower::shot()
 {
     AttackHandler attackHandler;
     attackHandler.setup();
