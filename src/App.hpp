@@ -2,9 +2,7 @@
 
 #include <glad/glad.h>
 #include <simpletext.h>
-#include "map/tile/TileDrawer.hpp"
-
-#include "enemy/enemyHandler.hpp"
+#include "GameManager.hpp"
 
 class App
 {
@@ -36,7 +34,6 @@ private:
 
     SimpleText TextRenderer{};
 
-    EnemyHandler enemyHandler;
-    TileDrawer tileDrawer{};
-    std::vector<TileType> vecTileType{};
+    GameManager _gameManager;
+
 };
