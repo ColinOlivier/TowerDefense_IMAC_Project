@@ -4,24 +4,21 @@
 
 enum class TileType {
     GRASS,
-    PATH_STAIGHT_V,
-    PATH_STAIGHT_H,
-    PATH_TURN_UR, // UP RIGHT
-    PATH_TURN_UL, // UP LEFT
-    PATH_TURN_DR, // DOWN RIGHT
-    PATH_TURN_DL, // DOWN LEFT
-    PATH_CROSSROAD_UP,
-    PATH_CROSSROAD_DOWN,
-    PATH_CROSSROAD_RIGHT,
-    PATH_CROSSROAD_LEFT,
-    PATH_CROSSROAD_FULL,
+    PATH,
     IN,
     OUT
 };
 
 
-struct Tile
+struct TileData
 {
     Position pos;
     TileType type{ TileType::GRASS };
+
+    int getConnectionIndex() const;
+    bool up_connection{ false };
+    bool rigth_connection{ false };
+    bool down_connection{ false };
+    bool left_connection{ false };
+
 };

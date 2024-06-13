@@ -9,7 +9,7 @@ void TileDrawer::setup() {
     }
 }
 
-void TileDrawer::drawTile(Tile tile) {
+void TileDrawer::drawTile(TileData tile) {
     drawTile(tileTypeTextureID[tile.type], tile.pos);
     // std::string tilePath{};
     // if (tile.type == TileType::GRASS)
