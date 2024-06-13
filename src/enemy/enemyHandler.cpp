@@ -3,6 +3,10 @@
 #include <ctime>
 #include <iostream>
 
+EnemyHandler::EnemyHandler(GameManager* gameManager_ptr) {
+    _gameManager_ptr = gameManager_ptr;
+}
+
 Enemy EnemyHandler::generateEnemy(Name name)
 {
     Enemy enemy{};

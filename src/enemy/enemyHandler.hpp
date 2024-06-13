@@ -5,8 +5,15 @@
 
 #include <vector>
 
+struct GameManager;
+
 struct EnemyHandler
 {
+private:
+    GameManager* _gameManager_ptr;
+public:
+    EnemyHandler(GameManager* gameManager_ptr);
+
     std::vector<Enemy> listEnemies{};
 
     double previousTime{0};
