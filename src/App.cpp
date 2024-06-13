@@ -14,8 +14,7 @@
 #include "fileReader/IDTFileReader.hpp"
 #include "fileReader/MapPNGReader.hpp"
 
-// TowerDrawer drawTower{};
-// TowerHandler towerHandler{};
+#include "player/player.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {

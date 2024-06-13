@@ -1,27 +1,24 @@
 #include "utils.hpp"
-#include "enemy/enemy.hpp"
+#include "tower/attack/attack.hpp"
 #include "player/player.hpp"
+#include "tower/tower.hpp"
 
 #include <iostream>
 #include <queue>
 
-Position Enemy::queueMove(float advancement, std::queue<Position> &queue)
+Position Attack::queueMove(float advancement /*temps parcours / distance*/, std::queue<Position> &queue)
 {
-    if (queue.empty())
-    {
-        return position;
-    }
-
     Position end = queue.front();
 
     while (advancement > 0 && !queue.empty())
     {
         float distanceToTravel = advancement * velocity;
-        position = move(position, end, distanceToTravel);
+        positionAttack = move(positionAttack, end, distanceToTravel);
 
-        if (position == end)
+        if (positionAttack == end)
         {
             queue.pop();
+            attackInvisible = true;
             if (!queue.empty())
             {
                 end = queue.front();
@@ -33,11 +30,19 @@ Position Enemy::queueMove(float advancement, std::queue<Position> &queue)
         }
     }
 
-    return position;
+    if (queue.empty())
+    {
+        return positionAttack;
+    }
+
+    return positionAttack;
 }
 
-Position Enemy::move(Position begin, Position end, float distanceToTravel)
+Position Attack::move(Position begin, Position end, float distanceToTravel /*temps parcours / distance*/)
 {
+    // Position positionTower;
+    // begin.x = positionTower.x;
+    // begin.y = positionTower.y;
     Position vecBeginEnd = end - begin;
     float distance = sqrt(vecBeginEnd.x * vecBeginEnd.x + vecBeginEnd.y * vecBeginEnd.y);
 
@@ -52,23 +57,4 @@ Position Enemy::move(Position begin, Position end, float distanceToTravel)
         begin.y + vecBeginEnd.y * ratio};
 
     return newPos;
-}
-
-void Enemy::hurt(float dammage)
-{
-    float currentLifePoints{lifePoints - dammage};
-    if (currentLifePoints <= 0)
-    {
-        die();
-        return;
-    }
-    lifePoints = currentLifePoints;
-    std::cout << lifePoints << std::endl;
-};
-
-void Enemy::die()
-{
-    isDead = true;
-    // TODO
-    // cagnotte = reward;
 }

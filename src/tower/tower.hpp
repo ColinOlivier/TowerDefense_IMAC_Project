@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "utils.hpp"
+#include "tower/attack/attack.hpp"
 
 struct Tower
 {
@@ -13,7 +14,7 @@ struct Tower
     void setup();
     void update();
     void render();
-    int shot(); // tire sur les ennemis et renvoie le nombre de vie restant de l'ennemi
+    Attack shot(); // tire sur les ennemis et renvoie le nombre de vie restant de l'ennemi
 };
 
 enum class TowerType
