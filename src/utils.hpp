@@ -37,7 +37,7 @@ std::ostream &operator<<(std::ostream &os, std::vector<T> const &vec)
 
 struct Position
 {
-    float x{0}, y{0};
+    double x{0}, y{0};
 };
 
 bool operator==(Position const &begin, Position const &end);
