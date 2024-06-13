@@ -2,10 +2,20 @@
 #include <iostream>
 #include <vector>
 #include "tower/tower.hpp"
+#include "tower/towerDrawer.hpp"
+
+struct GameManager;
 
 struct TowerHandler
 {
-    std::vector<Tower> tower;
+private:
+    GameManager* _gameManager_ptr;
+    TowerDrawer _towerDrawer{};
+public:
+    TowerHandler(GameManager* gameManager_ptr);
+
+    std::vector<Tower> listTowers;
+
     void setup();
     void update();
     void render();

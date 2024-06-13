@@ -1,6 +1,25 @@
 #include "tower/towerHandler.hpp"
 #include "tower/tower.hpp"
 
+
+TowerHandler::TowerHandler(GameManager* gameManager_ptr) {
+    _gameManager_ptr = gameManager_ptr;
+}
+
+
+void TowerHandler::setup() {
+    _towerDrawer.setup();
+}
+
+void TowerHandler::update() {
+
+}
+
+void TowerHandler::render() {
+    _towerDrawer.drawTowers(listTowers);
+}
+
+
 Tower TowerHandler::generateTower(TowerType type)
 {
     float x = 0.f;
