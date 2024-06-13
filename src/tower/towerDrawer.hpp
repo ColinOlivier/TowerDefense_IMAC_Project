@@ -8,6 +8,8 @@
 struct TowerDrawer
 {
     void loadTowerTexture();
+    void drawTowers(std::vector<Tower>& towersVector);
+
     void setup();
     void update();
     void render();

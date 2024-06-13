@@ -21,7 +21,22 @@ void TowerDrawer::setup()
 
 void TowerDrawer::update()
 {
-    render();
+    // render();
+}
+
+void TowerDrawer::drawTowers(std::vector<Tower>& towersVector) {
+    for (size_t i = 0; i < towersVector.size(); i++)
+    {
+        glPushMatrix();
+        glTranslatef(
+            towersVector[i].positionTower.x * 2 - 1,
+            towersVector[i].positionTower.y * (-2) + 1,
+            0.0f);
+        // glTranslatef(1.f, 1.f, 0.0f);
+        glScalef(0.2f, 0.27f, 0.4f);
+        draw_quad_with_texture(_texture);
+        glPopMatrix();
+    }
 }
 
 void TowerDrawer::render()
