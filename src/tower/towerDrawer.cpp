@@ -7,6 +7,7 @@
 #include "simpletext.h"
 #include <sstream>
 #include <GLFW/glfw3.h>
+#include "tower/attack/attackHandler.hpp"
 
 void TowerDrawer::loadTowerTexture()
 {
@@ -33,26 +34,35 @@ void TowerDrawer::drawTowers(std::vector<Tower>& towersVector) {
             towersVector[i].positionTower.y * (-2) + 1,
             0.0f);
         // glTranslatef(1.f, 1.f, 0.0f);
-        glScalef(0.2f, 0.27f, 0.4f);
+        glScalef(0.4f, 0.47f, 0.4f);
         draw_quad_with_texture(_texture);
+        // Tower tower{};
+        //  if(meter % (shootingRace*10)==0)
+        //  {
+
+        towersVector[i].shot();
+
+        //  }
+        //  meter ++;
+
         glPopMatrix();
     }
 }
 
 void TowerDrawer::render()
 {
-    // generateTower(TowerType basicTower);
-    for (size_t i = 0; i < vecTower.size(); i++)
-    {
-        glPushMatrix();
-        glTranslatef(
-            vecTower[i].positionTower.x * 2 - 1,
-            vecTower[i].positionTower.y * (-2) + 1,
-            0.0f);
-        // glTranslatef(1.f, 1.f, 0.0f);
-        glScalef(0.4f, 0.47f, 0.4f);
-        vecTower[i].shot();
-        draw_quad_with_texture(_texture);
-        glPopMatrix();
-    }
+    // // generateTower(TowerType basicTower);
+    // for (size_t i = 0; i < vecTower.size(); i++)
+    // {
+    //     glPushMatrix();
+    //     glTranslatef(
+    //         vecTower[i].positionTower.x * 2 - 1,
+    //         vecTower[i].positionTower.y * (-2) + 1,
+    //         0.0f);
+    //     // glTranslatef(1.f, 1.f, 0.0f);
+    //     glScalef(0.4f, 0.47f, 0.4f);
+    //     vecTower[i].shot();
+    //     draw_quad_with_texture(_texture);
+    //     glPopMatrix();
+    // }
 }

@@ -12,3 +12,9 @@ struct Attack
     Position queueMove(float advancement /*temps parcours / distance*/, std::queue<Position> &queue);
     Position move(Position begin, Position end, float advancement /*temps parcours / distance*/);
 };
+
+enum class AttackType
+{
+    fast,
+    slow,
+};

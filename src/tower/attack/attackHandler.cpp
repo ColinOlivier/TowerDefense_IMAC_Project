@@ -14,35 +14,45 @@
 #include "utils.hpp"
 #include "GLHelpers.hpp"
 
-Attack AttackHandler::generateAttack(Position positionAttack)
+Attack AttackHandler::generateAttack(AttackType type)
 {
     Position positionTower;
+    Position positionAttack;
     positionAttack.x = positionTower.x - 0.1;
     positionAttack.y = positionTower.y + 0.2;
-    Attack attack{positionAttack.x, positionAttack.y, 0.15f};
+    Attack attack{};
+    if (type == AttackType::fast)
+    {
+        attack = {positionAttack.x, positionAttack.y, 0.15f};
+    }
+     if (type == AttackType::slow)
+    {
+        attack = {positionAttack.x, positionAttack.y, 0.15f};
+    }
     return attack;
     // on peut changer la vitesse
 }
 
-std::vector<Attack> AttackHandler::generateAttacks(int numberAttacks) 
+std::vector<Attack> AttackHandler::generateAttacks(AttackType type, int numberAttacks)
 {
     std::vector<Attack> listAttacks{};
-    float offsetStep = 0.2f; // distance entre chaque attaque
+    // float offsetStep = 0.2f; // distance entre chaque attaque
     for (int i{0}; i < numberAttacks; i++)
     {
-        Position offset{offsetStep * i, 0};
-        listAttacks.push_back(generateAttack(offset));
+        // Position offset{offsetStep * i, 0};
+        listAttacks.push_back(generateAttack(type));
     }
     return listAttacks;
 };
 
 void AttackHandler::setup()
 {
-    attackDrawer.setup();
     previousTime = 0;
-    listAttacks = generateAttacks(1);
 
+    attackDrawer.setup();
+    listAttacks = generateAttacks(AttackType::fast, 1);
     positionQueue.push({-0.55, 0.45});
+
     // positionQueue.push({0.1, 0.3});
 }
 
@@ -75,6 +85,6 @@ void AttackHandler::render()
 {
     for (size_t i = 0; i < listAttacks.size(); i++)
     {
-        attackDrawer.render(listAttacks[i]);
+        attackDrawer.render(listAttacks);
     }
 }

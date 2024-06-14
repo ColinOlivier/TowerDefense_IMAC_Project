@@ -14,8 +14,8 @@ struct AttackHandler
 
     std::queue<Position> positionQueue{};
 
-    Attack generateAttack(Position positionAttack);
-    std::vector<Attack> generateAttacks(int numberAttacks);
+    Attack generateAttack(AttackType type);
+    std::vector<Attack> generateAttacks(AttackType type, int numberAttacks);
 
     void setup();
     void update();
