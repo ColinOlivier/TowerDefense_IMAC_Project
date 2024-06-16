@@ -10,7 +10,7 @@
 
 #include "tower/towerHandler.hpp"
 
-#define IDT_FILE_PATH "data/map.idt"
+#define IDT_FILE_PATH "../../data/map.idt"
 #define MAP_PNG_PATH "images/map.png"
 
 struct GameManager
