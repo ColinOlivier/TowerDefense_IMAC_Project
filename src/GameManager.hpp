@@ -25,11 +25,13 @@ private:
 public:
     EnemyHandler _enemyHandler{ this };
     TowerHandler _towerHandler{ this };
+    std::array<TileType, GRID_SIZE* GRID_SIZE> getMapTileTypeArray();
+
     void setup();
     void update();
     void render();
-
     void setupMapData();
+
     void clickForCreateTower(Position positionClick);
 
     void runWave();

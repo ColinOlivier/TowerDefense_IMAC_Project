@@ -1,9 +1,5 @@
 #include "GameManager.hpp"
 
-// GameManager::GameManager() {
-//     _mapData = createMapData();
-// }
-
 void GameManager::setup()
 {
     setupMapData();
@@ -16,7 +12,6 @@ void GameManager::setup()
 
 void GameManager::update()
 {
-
     _enemyHandler.update();
     _towerHandler.update();
 
@@ -40,12 +35,18 @@ void GameManager::render()
 
 void GameManager::setupMapData()
 {
+    std::array<TileType, GRID_SIZE* GRID_SIZE> mapTileTypeArray = getMapTileTypeArray();
+    _mapData = generateMap(mapTileTypeArray);
+    // _mapData.setupGraph();
+}
+
+std::array<TileType, GRID_SIZE* GRID_SIZE> GameManager::getMapTileTypeArray() {
     std::vector<std::string> idtFileContent = _idtReader.readTextFile(IDT_FILE_PATH);
-    std::array<Color, GRID_SIZE * GRID_SIZE> mapColorsArray = _mapPNGReader.getMapColorsArray(make_absolute_path(MAP_PNG_PATH, true));
+    std::array<Color, GRID_SIZE* GRID_SIZE> mapColorsArray = _mapPNGReader.getMapColorsArray(make_absolute_path(MAP_PNG_PATH, true));
 
     std::unordered_map<Color, TileType> colorMap = _idtReader.getColorMap(idtFileContent);
 
-    _mapData.setTilesArray(_mapPNGReader.getMapTileTypeArray(mapColorsArray, colorMap));
+    return _mapPNGReader.getMapTileTypeArray(mapColorsArray, colorMap);
 }
 
 void GameManager::clickForCreateTower(Position positionClick)
@@ -55,7 +56,7 @@ void GameManager::clickForCreateTower(Position positionClick)
         return;
     }
 
-    Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
+    Tower newTower{ _towerHandler.generateTower(TowerType::basicTower) };
     newTower.positionTower = positionClick;
     _towerHandler.listTowers.push_back(newTower);
 }
@@ -67,23 +68,23 @@ void GameManager::runWave()
     if (_enemyHandler.waveCount == 1)
     {
         _enemyHandler.listEnemies_second = _enemyHandler.generateEnemies(Name::Milan, 5, 0.15);
-        _enemyHandler.positionQueue_second.push({0, 0.5});
-        _enemyHandler.positionQueue_second.push({0., 0});
-        _enemyHandler.positionQueue_second.push({-0.5, -0.25});
-        _enemyHandler.positionQueue_second.push({0.25, 0.5});
-        _enemyHandler.positionQueue_second.push({1.5, 1});
-        _enemyHandler.positionQueue_second.push({-1, 0});
+        _enemyHandler.positionQueue_second.push({ 0, 0.5 });
+        _enemyHandler.positionQueue_second.push({ 0., 0 });
+        _enemyHandler.positionQueue_second.push({ -0.5, -0.25 });
+        _enemyHandler.positionQueue_second.push({ 0.25, 0.5 });
+        _enemyHandler.positionQueue_second.push({ 1.5, 1 });
+        _enemyHandler.positionQueue_second.push({ -1, 0 });
     }
 
     if (_enemyHandler.waveCount == 2)
     {
         _enemyHandler.listEnemies_third = _enemyHandler.generateEnemies(Name::Milan, 7, 0.1);
-        _enemyHandler.positionQueue_third.push({0, 0.5});
-        _enemyHandler.positionQueue_third.push({0., 0});
-        _enemyHandler.positionQueue_third.push({-0.5, -0.25});
-        _enemyHandler.positionQueue_third.push({0.25, 0.5});
-        _enemyHandler.positionQueue_third.push({1.5, 1});
-        _enemyHandler.positionQueue_third.push({-1, 0});
+        _enemyHandler.positionQueue_third.push({ 0, 0.5 });
+        _enemyHandler.positionQueue_third.push({ 0., 0 });
+        _enemyHandler.positionQueue_third.push({ -0.5, -0.25 });
+        _enemyHandler.positionQueue_third.push({ 0.25, 0.5 });
+        _enemyHandler.positionQueue_third.push({ 1.5, 1 });
+        _enemyHandler.positionQueue_third.push({ -1, 0 });
     }
 
     std::cout << _enemyHandler.waveCount << std::endl;
