@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include <simpletext.h>
 #include "GameManager.hpp"
+#include "GLFW/glfw3.h"
+#include <OpenGl/gl.h>
 
 class App
 {
@@ -13,7 +15,7 @@ public:
     void update();
 
     // GLFW callbacks binding
-    void key_callback(int key, int scancode, int action, int mods);
+    void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
     void mouse_button_callback(int button, int action, int mods);
     void scroll_callback(double xoffset, double yoffset);
     void cursor_position_callback(double xpos, double ypos);
