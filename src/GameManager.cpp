@@ -8,6 +8,8 @@ void GameManager::setup()
 
     _enemyHandler.setup();
     _towerHandler.setup();
+
+    _exitButton.setup();
 }
 
 void GameManager::update()
@@ -31,6 +33,7 @@ void GameManager::render()
 
     _enemyHandler.render();
     _towerHandler.render();
+    _exitButton.render();
 }
 
 void GameManager::setupMapData()
@@ -64,7 +67,6 @@ void GameManager::clickForCreateTower(Position positionClick)
 void GameManager::runWave()
 {
     _enemyHandler.waveCount++;
-
     if (_enemyHandler.waveCount == 1)
     {
         _enemyHandler.listEnemies_second = _enemyHandler.generateEnemies(Name::Milan, 5, 0.15);
@@ -88,4 +90,17 @@ void GameManager::runWave()
     }
 
     std::cout << _enemyHandler.waveCount << std::endl;
+}
+
+void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
+{
+    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y * (-2) + 1;
+    if (
+        -0.93 < positionClick.x * 2 - 1 &&
+        positionClick.x * 2 - 1 < -0.73 &&
+        0.80 < positionClick.y * (-2) + 1 &&
+        positionClick.y * (-2) + 1 < 0.94)
+    {
+        glfwSetWindowShouldClose(window, true);
+    }
 }
