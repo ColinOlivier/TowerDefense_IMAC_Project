@@ -26,6 +26,7 @@ private:
     MapData _mapData;
     MapDrawer _mapDrawer;
 
+public:
     EnemyHandler _enemyHandler{ this };
     TowerHandler _towerHandler{ this };
 

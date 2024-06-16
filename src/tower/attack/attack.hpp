@@ -1,20 +1,21 @@
 #pragma once
 #include "utils.hpp"
-#include <queue>
-#include <glad/glad.h>
 #include <vector>
+
+struct Tower;
+struct Enemy;
 
 struct Attack
 {
-    Position positionAttack;
-    float velocity{0}; //vitesse
+private:
+    Tower* _towerAttacker;
+    Enemy* _enemyTarget;
+    float velocity{ 0 }; //vitesse
     bool attackInvisible = false;
-    Position queueMove(float advancement /*temps parcours / distance*/, std::queue<Position> &queue);
-    Position move(Position begin, Position end, float advancement /*temps parcours / distance*/);
-};
+public:
+    Position positionAttack;
+    Attack(Position position, Tower* towerAttacker, Enemy* enemyTarget);
 
-enum class AttackType
-{
-    fast,
-    slow,
+    Position move(Position begin, Position end, float advancement /*temps parcours / distance*/);
+    void move(float advancement);
 };

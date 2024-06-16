@@ -11,9 +11,6 @@ struct TowerDrawer
     void drawTowers(std::vector<Tower>& towersVector);
 
     void setup();
-    void update();
-    void render();
 
     GLuint _texture{};
-    std::vector<Tower> vecTower{}; // Suppr
 };

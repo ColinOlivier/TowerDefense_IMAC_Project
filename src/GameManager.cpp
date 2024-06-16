@@ -22,7 +22,6 @@ void GameManager::update()
     _enemyHandler.update();
     _towerHandler.update();
 
-
     render();
 }
 
@@ -67,18 +66,39 @@ void GameManager::clickForCreateTower(Position positionClick)
 void GameManager::runWave()
 {
     _enemyHandler.waveCount++;
-}
+    if (_enemyHandler.waveCount == 1)
+    {
+        _enemyHandler.listEnemies_second = _enemyHandler.generateEnemies(Name::Milan, 5, 0.15);
+        _enemyHandler.positionQueue_second.push({0, 0.5});
+        _enemyHandler.positionQueue_second.push({0., 0});
+        _enemyHandler.positionQueue_second.push({-0.5, -0.25});
+        _enemyHandler.positionQueue_second.push({0.25, 0.5});
+        _enemyHandler.positionQueue_second.push({1.5, 1});
+        _enemyHandler.positionQueue_second.push({-1, 0});
+    }
 
+    if (_enemyHandler.waveCount == 2)
+    {
+        _enemyHandler.listEnemies_third = _enemyHandler.generateEnemies(Name::Milan, 7, 0.1);
+        _enemyHandler.positionQueue_third.push({0, 0.5});
+        _enemyHandler.positionQueue_third.push({0., 0});
+        _enemyHandler.positionQueue_third.push({-0.5, -0.25});
+        _enemyHandler.positionQueue_third.push({0.25, 0.5});
+        _enemyHandler.positionQueue_third.push({1.5, 1});
+        _enemyHandler.positionQueue_third.push({-1, 0});
+    }
+
+    std::cout << _enemyHandler.waveCount << std::endl;
+}
 
 void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
 {
-    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y* (-2) + 1;
-    if(
-        -0.93 < positionClick.x* 2 - 1 &&
-        positionClick.x * 2 - 1 < -0.73 && 
-        0.80 < positionClick.y* (-2) + 1 &&
-        positionClick.y* (-2) + 1 < 0.94
-    )
+    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y * (-2) + 1;
+    if (
+        -0.93 < positionClick.x * 2 - 1 &&
+        positionClick.x * 2 - 1 < -0.73 &&
+        0.80 < positionClick.y * (-2) + 1 &&
+        positionClick.y * (-2) + 1 < 0.94)
     {
         glfwSetWindowShouldClose(window, true);
     }

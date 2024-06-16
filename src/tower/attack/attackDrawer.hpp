@@ -10,8 +10,6 @@ struct AttackDrawer
 
     void loadAttackTexture();
     void setup();
-    void update();
-   // void render(Attack &attack);
-    void render(std::vector<Attack> &attacksVector);
-    std::vector<Attack> vecAttack{};
+
+    void drawAttacks(std::vector<Attack>& attacksVector);
 };
