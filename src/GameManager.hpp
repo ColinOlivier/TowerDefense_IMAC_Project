@@ -24,6 +24,9 @@ private:
 
     EnemyHandler _enemyHandler{ this };
     TowerHandler _towerHandler{ this };
+
+    ExitButton _exitButton{};
+
 public:
     void setup();
     void update();

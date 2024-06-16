@@ -12,6 +12,8 @@ void GameManager::setup()
 
     _enemyHandler.setup();
     _towerHandler.setup();
+
+    _exitButton.setup();
 }
 
 void GameManager::update()
@@ -19,6 +21,7 @@ void GameManager::update()
 
     _enemyHandler.update();
     _towerHandler.update();
+
 
     render();
 }
@@ -36,6 +39,7 @@ void GameManager::render()
 
     _enemyHandler.render();
     _towerHandler.render();
+    _exitButton.render();
 }
 
 void GameManager::setupMapData()
