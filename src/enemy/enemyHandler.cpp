@@ -5,27 +5,28 @@
 #include <iostream>
 #include <cstdlib>
 
-EnemyHandler::EnemyHandler(GameManager* gameManager_ptr) {
+EnemyHandler::EnemyHandler(GameManager *gameManager_ptr)
+{
     _gameManager_ptr = gameManager_ptr;
 }
 
 Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
 {
-    Enemy enemy{ name, initialOffset, 10, 0.1f, 5 }; // Utiliser le décalage initial
+    Enemy enemy{name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
 
     if (name == Name::Milan)
     {
-        enemy = { name, initialOffset, 10, 0.1f, 5 };
+        enemy = {name, initialOffset, 10, 0.1f, 5};
     }
 
     if (name == Name::Guimiel)
     {
-        enemy = { name, initialOffset, 10, 5, 5 };
+        enemy = {name, initialOffset, 10, 5, 5};
     }
 
     if (name == Name::Elea)
     {
-        enemy = { name, initialOffset, 10, 5, 5 };
+        enemy = {name, initialOffset, 10, 5, 5};
     }
 
     return enemy;
@@ -37,7 +38,7 @@ std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies)
     float offsetStep = 0.2f; // Distance entre les ennemis
     for (int i = 0; i < numberEnemies; i++)
     {
-        Position offset{ offsetStep * i, 0 }; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
+        Position offset{offsetStep * i, 0}; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
         listEnemies.push_back(generateEnemy(name, offset));
     }
     return listEnemies;
@@ -51,19 +52,27 @@ void EnemyHandler::setup()
     listEnemies = generateEnemies(Name::Milan, 3);
 
     // positionQueue = données Colin
-    positionQueue.push({ 0, 0.5 });
-    positionQueue.push({ 0., 0 });
-    positionQueue.push({ -0.5, -0.25 });
-    positionQueue.push({ 0.25, 0.5 });
-    positionQueue.push({ 1.5, 1 });
-    positionQueue.push({ -1, 0 });
+    positionQueue.push({0, 0.5});
+    positionQueue.push({0., 0});
+    positionQueue.push({-0.5, -0.25});
+    positionQueue.push({0.25, 0.5});
+    positionQueue.push({1.5, 1});
+    positionQueue.push({-1, 0});
 }
 
 void EnemyHandler::update()
 {
+    if (waveCount == 1)
+    {
+        listEnemies = generateEnemies(Name::Milan, 5);
+    }
+    if (waveCount == 2)
+    {
+        listEnemies = generateEnemies(Name::Milan, 7);
+    }
     // Move
-    const float currentTime{ (float)glfwGetTime() };
-    double ellapsedTime{ currentTime - previousTime };
+    const float currentTime{(float)glfwGetTime()};
+    double ellapsedTime{currentTime - previousTime};
     previousTime = currentTime;
 
     std::vector<size_t> deadEnemiesIndices;

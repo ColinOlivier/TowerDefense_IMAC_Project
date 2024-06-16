@@ -15,12 +15,13 @@
 #include "fileReader/MapPNGReader.hpp"
 
 #include "player/player.hpp"
+#include "GameManager.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
     // load what needs to be loaded here (for example textures)
 
-    img::Image test{ img::load(make_absolute_path("images/level.png", true), 4, true) };
+    img::Image test{img::load(make_absolute_path("images/level.png", true), 4, true)};
 
     _texture = loadTexture(test);
 
@@ -88,15 +89,18 @@ void App::render()
     // TextRenderer.Label(angle_label_text.c_str(), _width / 2, _height - 4, SimpleText::CENTER);
 
     // TextRenderer.Render();
-
 }
 
 void App::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(window, true);
-	}
+    {
+        glfwSetWindowShouldClose(window, true);
+    }
+    if (key == GLFW_KEY_W && action == GLFW_PRESS)
+    {
+        _gameManager.runWave();
+    }
 }
 
 void App::mouse_button_callback(int button, int action, int mods)
@@ -106,7 +110,7 @@ void App::mouse_button_callback(int button, int action, int mods)
         return;
     }
 
-    Position positionTower{ _xPosCur / _width, _yPosCur / _height };
+    Position positionTower{_xPosCur / _width, _yPosCur / _height};
     _gameManager.clickForCreateTower(positionTower);
 }
 
@@ -128,7 +132,7 @@ void App::size_callback(int width, int height)
     // make sure the viewport matches the new window dimensions
     glViewport(0, 0, _width, _height);
 
-    const float aspectRatio{ _width / (float)_height };
+    const float aspectRatio{_width / (float)_height};
 
     // Change the projection matrix
     glMatrixMode(GL_PROJECTION);

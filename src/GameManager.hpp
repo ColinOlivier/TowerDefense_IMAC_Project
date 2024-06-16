@@ -31,4 +31,6 @@ public:
 
     void setupMapData();
     void clickForCreateTower(Position positionClick);
+
+    void runWave();
 };

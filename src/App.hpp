@@ -4,7 +4,6 @@
 #include <simpletext.h>
 #include "GameManager.hpp"
 #include "GLFW/glfw3.h"
-#include <OpenGl/gl.h>
 
 class App
 {
@@ -37,5 +36,4 @@ private:
     SimpleText TextRenderer{};
 
     GameManager _gameManager;
-
 };
