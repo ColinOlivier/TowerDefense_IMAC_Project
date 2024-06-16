@@ -13,7 +13,7 @@
 
 void AttackDrawer::loadAttackTexture()
 {
-    img::Image test{img::load(make_absolute_path("images/attack.png", true), 4, true)};
+    img::Image test{ img::load(make_absolute_path("images/attack.png", true), 4, true) };
     _texture = loadTexture(test);
 }
 
@@ -23,14 +23,14 @@ void AttackDrawer::setup()
     // Setup the text renderer with blending enabled and white text color
 }
 
-void AttackDrawer::render(std::vector<Attack> &attacksVector) // render
+void AttackDrawer::drawAttacks(std::vector<Attack>& attacksVector) // render
 {
     for (size_t i = 0; i < attacksVector.size(); i++)
     {
         glPushMatrix();
         glTranslatef(
-            attacksVector[i].positionAttack.x,
-            attacksVector[i].positionAttack.y,
+            attacksVector[i].positionAttack.x * 2 - 1,
+            attacksVector[i].positionAttack.y * (-2) + 1,
             0.f);
         glScalef(0.4f, 0.4f, 0.4f); // remise à l'échelle
         draw_quad_with_texture(_texture);

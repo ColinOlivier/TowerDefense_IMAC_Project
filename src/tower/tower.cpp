@@ -1,25 +1,14 @@
 #include "tower/tower.hpp"
-#include "tower/attack/attackHandler.hpp"
-#include "tower/attack/attackDrawer.hpp"
 #include "tower/attack/attack.hpp"
 
-void Tower::shot()
-{
-    AttackHandler attackHandler;
-    attackHandler.setup();
-    // tire sur les ennemis 
-    attackHandler.update();
-    attackHandler.render();
+#include <GLFW/glfw3.h>
+
+bool Tower::canShot() {
+    return (glfwGetTime() - lastShotTime) > shootingRace;
 }
 
-void Tower::render()
+Attack Tower::shot(Enemy* enemyTarget)
 {
-}
-
-void Tower::setup()
-{
-}
-
-void Tower::update()
-{
+    lastShotTime = glfwGetTime();
+    return Attack(positionTower, this, enemyTarget);
 }

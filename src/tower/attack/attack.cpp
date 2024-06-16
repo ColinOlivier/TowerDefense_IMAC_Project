@@ -1,48 +1,15 @@
-#include "utils.hpp"
 #include "tower/attack/attack.hpp"
-#include "player/player.hpp"
 #include "tower/tower.hpp"
+#include "enemy/enemy.hpp"
 
-#include <iostream>
-#include <queue>
-
-Position Attack::queueMove(float advancement /*temps parcours / distance*/, std::queue<Position> &queue)
-{
-    Position end = queue.front();
-
-    while (advancement > 0 && !queue.empty())
-    {
-        float distanceToTravel = advancement * velocity;
-        positionAttack = move(positionAttack, end, distanceToTravel);
-
-        if (positionAttack == end)
-        {
-            queue.pop();
-            attackInvisible = true;
-            if (!queue.empty())
-            {
-                end = queue.front();
-            }
-        }
-        else
-        {
-            advancement = 0; // Stop the loop if we haven't reached the end
-        }
-    }
-
-    if (queue.empty())
-    {
-        return positionAttack;
-    }
-
-    return positionAttack;
+Attack::Attack(Position position, Tower* towerAttacker, Enemy* enemyTarget) {
+    positionAttack = position;
+    _towerAttacker = towerAttacker;
+    _enemyTarget = enemyTarget;
 }
 
 Position Attack::move(Position begin, Position end, float distanceToTravel /*temps parcours / distance*/)
 {
-    // Position positionTower;
-    // begin.x = positionTower.x;
-    // begin.y = positionTower.y;
     Position vecBeginEnd = end - begin;
     float distance = sqrt(vecBeginEnd.x * vecBeginEnd.x + vecBeginEnd.y * vecBeginEnd.y);
 
@@ -54,7 +21,16 @@ Position Attack::move(Position begin, Position end, float distanceToTravel /*tem
     float ratio = distanceToTravel / distance;
     Position newPos = {
         begin.x + vecBeginEnd.x * ratio,
-        begin.y + vecBeginEnd.y * ratio};
+        begin.y + vecBeginEnd.y * ratio };
 
     return newPos;
+}
+
+void Attack::move(float advancement) {
+    if (_enemyTarget == nullptr)
+        return;
+    Position vecBeginEnd = _enemyTarget->position - _towerAttacker->positionTower;
+    float distance = sqrt(vecBeginEnd.x * vecBeginEnd.x + vecBeginEnd.y * vecBeginEnd.y);
+
+    positionAttack += (vecBeginEnd * (1 / distance)) * advancement;
 }

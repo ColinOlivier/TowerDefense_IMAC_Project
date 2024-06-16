@@ -3,6 +3,7 @@
 #include <vector>
 #include "tower/tower.hpp"
 #include "tower/towerDrawer.hpp"
+#include "tower/attack/attackHandler.hpp"
 
 struct GameManager;
 
@@ -11,6 +12,7 @@ struct TowerHandler
 private:
     GameManager* _gameManager_ptr;
     TowerDrawer _towerDrawer{};
+    AttackHandler _attackHandler{ this };
 public:
     TowerHandler(GameManager* gameManager_ptr);
 
