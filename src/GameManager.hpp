@@ -9,6 +9,10 @@
 #include "enemy/enemyHandler.hpp"
 
 #include "tower/towerHandler.hpp"
+#include "button/exit.hpp"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #define IDT_FILE_PATH "../../data/map.idt"
 #define MAP_PNG_PATH "images/map.png"
@@ -36,4 +40,6 @@ public:
     void clickForCreateTower(Position positionClick);
 
     void runWave();
+
+    void clickForExit(Position positionClick, GLFWwindow *window);
 };

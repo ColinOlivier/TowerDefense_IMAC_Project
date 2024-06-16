@@ -68,3 +68,18 @@ void GameManager::runWave()
 {
     _enemyHandler.waveCount++;
 }
+
+
+void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
+{
+    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y* (-2) + 1;
+    if(
+        -0.93 < positionClick.x* 2 - 1 &&
+        positionClick.x * 2 - 1 < -0.73 && 
+        0.80 < positionClick.y* (-2) + 1 &&
+        positionClick.y* (-2) + 1 < 0.94
+    )
+    {
+        glfwSetWindowShouldClose(window, true);
+    }
+}
