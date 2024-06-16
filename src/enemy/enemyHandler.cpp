@@ -32,10 +32,10 @@ Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
     return enemy;
 }
 
-std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies)
+std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies, float offsetStep)
 {
     std::vector<Enemy> listEnemies{};
-    float offsetStep = 0.2f; // Distance entre les ennemis
+    // float offsetStep = 0.2f;  Distance entre les ennemis
     for (int i = 0; i < numberEnemies; i++)
     {
         Position offset{offsetStep * i, 0}; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
@@ -49,7 +49,15 @@ void EnemyHandler::setup()
     previousTime = 0.0;
     // enemyDrawer = EnemyDrawer();
     enemyDrawer.setup();
-    listEnemies = generateEnemies(Name::Milan, 3);
+    listEnemies = generateEnemies(Name::Milan, 3, 0.2);
+    if (waveCount == 1)
+    {
+        listEnemies = generateEnemies(Name::Milan, 5, 0.15);
+    }
+    if (waveCount == 2)
+    {
+        listEnemies = generateEnemies(Name::Milan, 7, 0.1);
+    }
 
     // positionQueue = données Colin
     positionQueue.push({0, 0.5});
@@ -62,14 +70,6 @@ void EnemyHandler::setup()
 
 void EnemyHandler::update()
 {
-    if (waveCount == 1)
-    {
-        listEnemies = generateEnemies(Name::Milan, 5);
-    }
-    if (waveCount == 2)
-    {
-        listEnemies = generateEnemies(Name::Milan, 7);
-    }
     // Move
     const float currentTime{(float)glfwGetTime()};
     double ellapsedTime{currentTime - previousTime};

@@ -63,4 +63,6 @@ void GameManager::clickForCreateTower(Position positionClick)
 void GameManager::runWave()
 {
     _enemyHandler.waveCount++;
+    _enemyHandler.setup();
+    // std::cout << "quelque chose se passe" << std::endl;
 }

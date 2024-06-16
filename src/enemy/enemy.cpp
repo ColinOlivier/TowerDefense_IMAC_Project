@@ -63,7 +63,7 @@ void Enemy::hurt(float dammage)
         return;
     }
     lifePoints = currentLifePoints;
-    std::cout << lifePoints << std::endl;
+    // std::cout << lifePoints << std::endl;
 };
 
 void Enemy::die()

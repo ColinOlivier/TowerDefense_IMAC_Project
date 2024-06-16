@@ -25,7 +25,7 @@ public:
     std::queue<Position> positionQueue{};
 
     Enemy generateEnemy(Name name, Position initialOffset);
-    std::vector<Enemy> generateEnemies(Name name, int numberEnemies);
+    std::vector<Enemy> generateEnemies(Name name, int numberEnemies, float offsetStep);
 
     void setup();
     void update();
