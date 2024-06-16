@@ -37,11 +37,14 @@ std::ostream &operator<<(std::ostream &os, std::vector<T> const &vec)
 
 struct Position
 {
-    double x{0}, y{0};
+    double x{ 0 }, y{ 0 };
+    Position& operator+=(const Position& pos);
 };
 
 bool operator==(Position const &begin, Position const &end);
 Position operator*(Position const &begin, float const f);
 Position operator*(float const f, Position const &position);
 Position operator+(Position const &begin, Position const &end);
-Position operator-(Position const &begin, Position const &end);
+Position operator-(Position const &begin, Position const& end);
+
+unsigned int getChebyshevDistance(Position const& begin, Position const& end);
