@@ -15,7 +15,6 @@
 #include "fileReader/MapPNGReader.hpp"
 
 #include "player/player.hpp"
-#include "GameManager.hpp"
 
 App::App() : _previousTime(0.0), _viewSize(2.0)
 {
