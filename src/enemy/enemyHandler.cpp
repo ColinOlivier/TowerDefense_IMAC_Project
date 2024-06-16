@@ -1,5 +1,6 @@
 #include "enemyHandler.hpp"
 #include "player/player.hpp"
+#include "GameManager.hpp"
 #include <GLFW/glfw3.h>
 #include <ctime>
 #include <iostream>
