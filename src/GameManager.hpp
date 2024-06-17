@@ -1,5 +1,9 @@
 #pragma once
 
+#include <glad/glad.h>
+#include <simpletext.h>
+#include "GLFW/glfw3.h"
+
 #include "fileReader/IDTFileReader.hpp"
 #include "fileReader/MapPNGReader.hpp"
 
@@ -18,18 +22,28 @@
 #define IDT_FILE_PATH "../../data/map.idt"
 #define MAP_PNG_PATH "images/map.png"
 
+struct App;
+
 struct GameManager
 {
 private:
+    App *_app;
     IDTFileReader _idtReader;
     MapPNGReader _mapPNGReader;
 
     MapData _mapData;
     MapDrawer _mapDrawer;
 public:
-    EnemyHandler _enemyHandler{ this };
-    TowerHandler _towerHandler{ this };
-    std::array<TileType, GRID_SIZE* GRID_SIZE> getMapTileTypeArray();
+    GameManager(App *app);
+    EnemyHandler _enemyHandler{this};
+    TowerHandler _towerHandler{this};
+
+    SimpleText TextRenderer{};
+
+    int score{0};
+    void addPoints(int reward);
+
+    std::array<TileType, GRID_SIZE * GRID_SIZE> getMapTileTypeArray();
 
     ExitButton _exitButton{};
     StartButton _startButton{};

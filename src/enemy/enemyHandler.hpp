@@ -9,10 +9,7 @@ struct GameManager;
 
 struct EnemyHandler
 {
-private:
     GameManager *_gameManager_ptr;
-
-public:
     EnemyHandler(GameManager *gameManager_ptr);
 
     std::vector<Enemy> listEnemies{};
@@ -26,7 +23,7 @@ public:
 
     std::queue<Position> positionQueue{};
     std::queue<Position> positionQueue_second{};
-    std::queue<Position> positionQueue_third{};
+    std::queue<Position> positionQueue_third;
 
     Enemy generateEnemy(Name name, Position initialOffset);
     std::vector<Enemy> generateEnemies(Name name, int numberEnemies, float offsetStep);

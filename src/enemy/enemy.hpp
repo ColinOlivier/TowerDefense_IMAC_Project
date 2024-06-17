@@ -3,6 +3,8 @@
 #include "utils.hpp"
 #include <queue>
 
+struct EnemyHandler;
+
 enum class Name
 {
     Milan,
@@ -12,6 +14,7 @@ enum class Name
 
 struct Enemy
 {
+    EnemyHandler *_enemyHandler;
     Name name;
     Position position{0, 0};
     float lifePoints{0};

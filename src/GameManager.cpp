@@ -1,7 +1,19 @@
 #include "GameManager.hpp"
+#include "App.hpp"
+
+GameManager::GameManager(App *app)
+{
+    _app = app;
+}
 
 void GameManager::setup()
 {
+
+    TextRenderer.ResetFont();
+    TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::RED);
+    TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
+    TextRenderer.EnableBlending(true);
+
     setupMapData();
 
     _mapDrawer.loadSpriteTexture();
@@ -39,6 +51,14 @@ void GameManager::render()
 
     _startButton.render();
     _exitButton.render(); // à garder à la fin
+    std::string score_text{};
+    std::stringstream stream{};
+
+    stream << std::fixed << "Score: " << score;
+    score_text = stream.str();
+
+    TextRenderer.Label(score_text.c_str(), _app->_width / 2, _app->_height - 4, SimpleText::CENTER);
+    TextRenderer.Render();
 }
 
 void GameManager::setupMapData()
@@ -58,6 +78,11 @@ std::array<TileType, GRID_SIZE * GRID_SIZE> GameManager::getMapTileTypeArray()
     return _mapPNGReader.getMapTileTypeArray(mapColorsArray, colorMap);
 }
 
+void GameManager::addPoints(int reward)
+{
+    score += reward;
+}
+
 void GameManager::clickForCreateTower(Position positionClick)
 {
     if (isPause == false)
@@ -67,9 +92,9 @@ void GameManager::clickForCreateTower(Position positionClick)
             return;
         }
 
-        Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
-        newTower.positionTower = positionClick;
-        _towerHandler.listTowers.push_back(newTower);
+    Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
+    newTower.positionTower = positionClick;
+    _towerHandler.listTowers.push_back(newTower);
     }
 }
 

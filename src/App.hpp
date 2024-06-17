@@ -21,11 +21,12 @@ public:
     void size_callback(int width, int height);
     double _xPosCur, _yPosCur;
 
+    int _width{};
+    int _height{};
+
 private:
     void render();
 
-    int _width{};
-    int _height{};
     double _previousTime{};
     float _viewSize{};
 
@@ -35,5 +36,5 @@ private:
 
     SimpleText TextRenderer{};
 
-    GameManager _gameManager;
+    GameManager _gameManager{this};
 };
