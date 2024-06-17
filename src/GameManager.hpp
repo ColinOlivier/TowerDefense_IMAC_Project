@@ -11,6 +11,7 @@
 #include "map/MapDrawer.hpp"
 
 #include "enemy/enemyHandler.hpp"
+#include "points/points.hpp"
 
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
@@ -33,6 +34,7 @@ private:
 
     MapData _mapData;
     MapDrawer _mapDrawer;
+
 public:
     GameManager(App *app);
     EnemyHandler _enemyHandler{this};
@@ -47,6 +49,7 @@ public:
 
     ExitButton _exitButton{};
     StartButton _startButton{};
+    Points _points{};
     void setup();
     void update();
     void render();

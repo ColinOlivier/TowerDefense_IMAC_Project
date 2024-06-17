@@ -18,7 +18,7 @@ void GameManager::setup()
     setupMapData();
 
     _mapDrawer.loadSpriteTexture();
-
+    _points.setup();
     _enemyHandler.setup();
     _towerHandler.setup();
 
@@ -50,15 +50,18 @@ void GameManager::render()
     _enemyHandler.render();
     _towerHandler.render();
 
+    _points.render();
+
     _startButton.render();
     _exitButton.render(); // à garder à la fin
+
     std::string score_text{};
     std::stringstream stream{};
 
-    stream << std::fixed << "Score: " << score;
+    stream << std::fixed << " " << score;
     score_text = stream.str();
 
-    TextRenderer.Label(score_text.c_str(), _app->_width / 2, _app->_height - 4, SimpleText::CENTER);
+    TextRenderer.Label(score_text.c_str(), (_app->_width / 2) + 30, _app->_height / 16, SimpleText::CENTER);
     TextRenderer.Render();
 }
 
@@ -93,9 +96,9 @@ void GameManager::clickForCreateTower(Position positionClick)
             return;
         }
 
-    Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
-    newTower.positionTower = positionClick;
-    _towerHandler.listTowers.push_back(newTower);
+        Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
+        newTower.positionTower = positionClick;
+        _towerHandler.listTowers.push_back(newTower);
     }
 }
 
