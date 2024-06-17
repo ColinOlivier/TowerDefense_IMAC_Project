@@ -44,4 +44,6 @@ public:
 
     void clickForExit(Position positionClick, GLFWwindow *window);
     void clickForStart(Position positionClick);
+
+    bool isPause = true;
 };
