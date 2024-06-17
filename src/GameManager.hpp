@@ -13,11 +13,13 @@
 #include "enemy/enemyHandler.hpp"
 #include "points/points.hpp"
 #include "screen/gameOver.hpp"
+#include "screen/win.hpp"
 
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
 #include "button/start.hpp"
 #include "button/pause.hpp"
+
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -34,10 +36,10 @@ private:
     IDTFileReader _idtReader;
     MapPNGReader _mapPNGReader;
 
-    MapData _mapData;
     MapDrawer _mapDrawer;
 
 public:
+    MapData _mapData;
     GameManager(App *app);
     EnemyHandler _enemyHandler{this};
     TowerHandler _towerHandler{this};
@@ -50,10 +52,12 @@ public:
     std::array<TileType, GRID_SIZE * GRID_SIZE> getMapTileTypeArray();
 
     GameOver _gameOver{};
+    Win _win{};
 
     ExitButton _exitButton{};
     StartButton _startButton{};
     PauseButton _pauseButton{};
+    
     Points _points{};
 
     bool over{false};

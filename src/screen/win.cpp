@@ -1,4 +1,4 @@
-#include "button/start.hpp"
+#include "screen/win.hpp"
 #include "App.hpp"
 #include "utils.hpp"
 #include "GLHelpers.hpp"
@@ -6,25 +6,25 @@
 #include <sstream>
 #include <GLFW/glfw3.h>
 
-void StartButton::loadStartButtonTexture()
+void Win::loadWinTexture()
 {
-    img::Image exit{img::load(make_absolute_path("images/Button/start_fond.png", true), 4, true)};
+    img::Image exit{img::load(make_absolute_path("images/Button/win.png", true), 4, true)};
     _texture = loadTexture(exit);
 }
 
-void StartButton::setup()
+void Win::setup()
 {
-    loadStartButtonTexture();
+    loadWinTexture();
 }
 
-void StartButton::render()
+void Win::render()
 {
     if (IsVisible == true)
     {
         glPushMatrix();
         glTranslatef(
-            positionStartButton.x,
-            positionStartButton.y,
+            positionWin.x,
+            positionWin.y,
             0.0f);
         glScalef(2.5f, 2.5f, 2.5f);
         draw_quad_with_texture(_texture);

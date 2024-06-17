@@ -8,7 +8,7 @@
 
 void GameOver::loadGameOverTexture()
 {
-    img::Image gameOver{img::load(make_absolute_path("images/loose.png", true), 4, true)};
+    img::Image gameOver{img::load(make_absolute_path("images/Button/loose.png", true), 4, true)};
     _textureGameOver = loadTexture(gameOver);
 }
 
@@ -32,10 +32,10 @@ void GameOver::render()
     }
 }
 
-void GameOver::update()
-{
-    if (IsVisible == true)
-    {
-        render();
-    }
-}
+// void GameOver::update()
+// {
+//     if (IsVisible == true)
+//     {
+//         render();
+//     }
+// }

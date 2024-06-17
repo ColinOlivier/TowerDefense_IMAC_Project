@@ -23,9 +23,11 @@ void GameManager::setup()
     _towerHandler.setup();
 
     _gameOver.setup();
+    _win.setup();
 
     _startButton.setup();
     _pauseButton.setup();
+
     _exitButton.setup(); // à laisser à la fin
 }
 
@@ -42,7 +44,12 @@ void GameManager::update()
         {
             // std::cout << "game over" << std::endl;
             _gameOver.IsVisible = true;
-            _gameOver.update();
+            _gameOver.render();
+        }
+        if(_enemyHandler.listEnemies.size() == 0 && _enemyHandler.waveCount == 3)
+        {
+            _win.IsVisible = true;
+            _win.render();
         }
     }
 
@@ -105,7 +112,7 @@ void GameManager::clickForCreateTower(Position positionClick)
 {
     if (isPause == false)
     {
-        if (_towerHandler.listTowers.size() >= 5)
+        if (!_towerHandler.canBuild(positionClick))
         {
             return;
         }
