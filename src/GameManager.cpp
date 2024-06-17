@@ -101,6 +101,7 @@ void GameManager::clickForCreateTower(Position positionClick)
         Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
         newTower.positionTower = positionClick;
         _towerHandler.listTowers.push_back(newTower);
+        score -= newTower.price;
     }
 }
 
