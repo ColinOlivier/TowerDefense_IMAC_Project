@@ -15,10 +15,12 @@ struct TileData
     Position pos;
     TileType type{ TileType::GRASS };
 
+    TileData* up_ptr{ nullptr };
+    TileData* right_ptr{ nullptr };
+    TileData* down_ptr{ nullptr };
+    TileData* left_ptr{ nullptr };
+
     int getConnectionIndex() const;
-    bool up_connection{ false };
-    bool rigth_connection{ false };
-    bool down_connection{ false };
-    bool left_connection{ false };
+    bool isCorner() const;
 
 };

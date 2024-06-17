@@ -26,20 +26,18 @@ private:
 
     MapData _mapData;
     MapDrawer _mapDrawer;
-
 public:
     EnemyHandler _enemyHandler{ this };
     TowerHandler _towerHandler{ this };
+    std::array<TileType, GRID_SIZE* GRID_SIZE> getMapTileTypeArray();
 
     ExitButton _exitButton{};
     StartButton _startButton{};
-
-public:
     void setup();
     void update();
     void render();
-
     void setupMapData();
+
     void clickForCreateTower(Position positionClick);
 
     void runWave();
