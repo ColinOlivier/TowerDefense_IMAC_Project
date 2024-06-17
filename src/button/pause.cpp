@@ -8,7 +8,7 @@
 
 void PauseButton::loadPauseButtonTexture()
 {
-    img::Image pause{img::load(make_absolute_path("images/Button/bouton_exit.png", true), 4, true)};
+    img::Image pause{img::load(make_absolute_path("images/Button/pause.png", true), 4, true)};
     _texture = loadTexture(pause);
 }
 

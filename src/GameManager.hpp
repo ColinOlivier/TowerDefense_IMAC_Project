@@ -50,6 +50,7 @@ public:
 
     ExitButton _exitButton{};
     StartButton _startButton{};
+    PauseButton _pauseButton{};
     Points _points{};
     void setup();
     void update();
