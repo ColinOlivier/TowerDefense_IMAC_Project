@@ -1,5 +1,4 @@
 #include "enemyHandler.hpp"
-#include "player/player.hpp"
 #include "GameManager.hpp"
 #include <GLFW/glfw3.h>
 #include <ctime>
@@ -15,21 +14,21 @@ EnemyHandler::EnemyHandler(GameManager *gameManager_ptr)
 
 Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
 {
-    Enemy enemy{name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
+    Enemy enemy{this,name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
 
     if (name == Name::Milan)
     {
-        enemy = {name, initialOffset, 10, 0.1f, 5};
+        enemy = Enemy{this,name, initialOffset, 10, 0.1f, 5};
     }
 
     if (name == Name::Guimiel)
     {
-        enemy = {name, initialOffset, 10, 5, 5};
+        enemy = Enemy{this,name, initialOffset, 10, 5, 5};
     }
 
     if (name == Name::Elea)
     {
-        enemy = {name, initialOffset, 10, 5, 5};
+        enemy = Enemy{this,name, initialOffset, 10, 5, 5};
     }
 
     return enemy;

@@ -1,11 +1,19 @@
 #include "GameManager.hpp"
+#include "App.hpp"
 
-// GameManager::GameManager() {
-//     _mapData = createMapData();
-// }
+GameManager::GameManager(App *app)
+{
+    _app = app;
+}
 
 void GameManager::setup()
 {
+
+    TextRenderer.ResetFont();
+    TextRenderer.SetColor(SimpleText::TEXT_COLOR, SimpleText::Color::RED);
+    TextRenderer.SetColorf(SimpleText::BACKGROUND_COLOR, 0.f, 0.f, 0.f, 0.f);
+    TextRenderer.EnableBlending(true);
+
     setupMapData();
 
     _mapDrawer.loadSpriteTexture();
@@ -36,6 +44,18 @@ void GameManager::render()
 
     _enemyHandler.render();
     _towerHandler.render();
+
+    // TextRenderer.Label(charScore, 500, 500, SimpleText::CENTER);
+    // TextRenderer.Render();
+
+    std::string score_text{};
+    std::stringstream stream{};
+
+    stream << std::fixed << "Score: " << score;
+    score_text = stream.str();
+
+    TextRenderer.Label(score_text.c_str(), _app->_width / 2, _app->_height - 4, SimpleText::CENTER);
+    TextRenderer.Render();
 }
 
 void GameManager::setupMapData()
@@ -46,6 +66,11 @@ void GameManager::setupMapData()
     std::unordered_map<Color, TileType> colorMap = _idtReader.getColorMap(idtFileContent);
 
     _mapData.setTilesArray(_mapPNGReader.getMapTileTypeArray(mapColorsArray, colorMap));
+}
+
+void GameManager::addPoints(int reward)
+{
+    score += reward;
 }
 
 void GameManager::clickForCreateTower(Position positionClick)
