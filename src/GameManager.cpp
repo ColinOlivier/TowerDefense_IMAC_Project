@@ -93,15 +93,36 @@ void GameManager::clickForCreateTower(Position positionClick)
 {
     if (isPause == false)
     {
-        if (_towerHandler.listTowers.size() >= 6)
+        if (_towerHandler.listTowers.size() >= 5)
         {
             return;
         }
 
-        Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
-        newTower.positionTower = positionClick;
-        _towerHandler.listTowers.push_back(newTower);
-        score -= newTower.price;
+        Tower newTower{_towerHandler.generateTower(TowerType::pineappleTower)};
+        // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
+
+        if (score >= newTower.price)
+        {
+            positionClick.x = positionClick.x * 10;
+            positionClick.y = positionClick.y * 10;
+
+            positionClick.x = std::round(positionClick.x) + 0.5;
+            positionClick.y = std::round(positionClick.y) + 0.5;
+
+            // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
+
+            positionClick.x = positionClick.x / 10;
+            positionClick.y = positionClick.y / 10;
+
+            for (int i{0}; i < _towerHandler.listTowers.size(); i++)
+            {
+                if (_towerHandler.listTowers[i].positionTower == positionClick)
+                    return; // deux tours ne peuvent pas se superposer
+            }
+            newTower.positionTower = positionClick;
+            _towerHandler.listTowers.push_back(newTower);
+            score -= newTower.price;
+        }
     }
 }
 
@@ -143,7 +164,7 @@ void GameManager::runWave()
         _enemyHandler.positionQueue_third.push({-1, 0});
     }
 
-    std::cout << _enemyHandler.waveCount << std::endl;
+    // std::cout << _enemyHandler.waveCount << std::endl;
 }
 
 void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
