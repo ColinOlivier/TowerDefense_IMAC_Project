@@ -30,7 +30,7 @@ void MapDrawer::loadSpriteTexture() {
         }
     }
 
-    img::Image texture{ img::load(make_absolute_path("images/Map/tilesCustom/grass_02.png", true), 4, true) };
+    img::Image texture{ img::load(make_absolute_path("images/Map/tilesCustom/base_00.png", true), 4, true) };
     towerBaseTexture = loadTexture(texture);
 }
 
