@@ -10,6 +10,7 @@
 
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
+#include "button/start.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -31,6 +32,7 @@ public:
     TowerHandler _towerHandler{ this };
 
     ExitButton _exitButton{};
+    StartButton _startButton{};
 
 public:
     void setup();
@@ -43,4 +45,5 @@ public:
     void runWave();
 
     void clickForExit(Position positionClick, GLFWwindow *window);
+    void clickForStart(Position positionClick);
 };

@@ -13,7 +13,8 @@ void GameManager::setup()
     _enemyHandler.setup();
     _towerHandler.setup();
 
-    _exitButton.setup();
+    _startButton.setup();
+    _exitButton.setup();//à laisser à la fin
 }
 
 void GameManager::update()
@@ -38,7 +39,8 @@ void GameManager::render()
 
     _enemyHandler.render();
     _towerHandler.render();
-    _exitButton.render();
+    _startButton.render();
+    _exitButton.render();//à garder à la fin
 }
 
 void GameManager::setupMapData()
@@ -93,7 +95,6 @@ void GameManager::runWave()
 
 void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
 {
-    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y * (-2) + 1;
     if (
         -0.93 < positionClick.x * 2 - 1 &&
         positionClick.x * 2 - 1 < -0.73 &&
@@ -102,4 +103,13 @@ void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
     {
         glfwSetWindowShouldClose(window, true);
     }
+}
+
+void GameManager::clickForStart(Position positionClick)
+{
+    if(-0.80 < positionClick.x * 2 - 1 &&
+        positionClick.x * 2 - 1 < 0.8 &&
+        -0.20 < positionClick.y * (-2) + 1 &&
+        positionClick.y * (-2) + 1 < 0.2)
+        _startButton.IsVisible = false;
 }
