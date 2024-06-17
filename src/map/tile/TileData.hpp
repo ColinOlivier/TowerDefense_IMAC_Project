@@ -5,6 +5,7 @@
 enum class TileType {
     GRASS,
     PATH,
+    TOWER_BASE,
     IN,
     OUT
 };

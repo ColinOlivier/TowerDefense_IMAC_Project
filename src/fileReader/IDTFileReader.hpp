@@ -15,6 +15,7 @@ struct IDTFileReader : TextFileReader
 {
     std::unordered_map<std::string, TileType> _tileTypeNameMap{
         {"path", TileType::PATH},
+        {"tower_base", TileType::TOWER_BASE},
         {"in", TileType::IN},
         {"out", TileType::OUT}
     };

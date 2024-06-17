@@ -30,7 +30,8 @@ private:
     };
     std::unordered_map<int, GLuint> _connectionIndexTextureIDMap;
 public:
-    // std::unordered_map<std::pair<TileType, int>, GLuint> tileTypeSpriteTexMap;
+    GLuint towerBaseTexture;
+
     void loadSpriteTexture();
     void displayMap(MapData& map);
     void displayTile(TileData tile, GLuint textureID, Position position);

@@ -9,7 +9,12 @@ void MapDrawer::displayMap(MapData& map) {
         for (size_t y = 0; y < GRID_SIZE; y++)
         {
             TileData tile = map.tilesArray[x + y * GRID_SIZE];
+            if (tile.type == TileType::PATH || tile.type == TileType::IN || tile.type == TileType::OUT)
             displayTile(tile, _connectionIndexTextureIDMap.at(tile.getConnectionIndex()), { (float)x, (float)y });
+            else if (tile.type == TileType::GRASS)
+                displayTile(tile, _connectionIndexTextureIDMap.at(0), { (float)x, (float)y });
+            else if (tile.type == TileType::TOWER_BASE)
+                displayTile(tile, towerBaseTexture, { (float)x, (float)y });
         }
     }
 }
@@ -24,6 +29,9 @@ void MapDrawer::loadSpriteTexture() {
             _connectionIndexTextureIDMap.insert({ connectionIndexFilePath.first, textureId });
         }
     }
+
+    img::Image texture{ img::load(make_absolute_path("images/Map/tilesCustom/grass_02.png", true), 4, true) };
+    towerBaseTexture = loadTexture(texture);
 }
 
 void MapDrawer::displayTile(TileData tile, GLuint textureID, Position position) {

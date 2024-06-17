@@ -8,6 +8,10 @@ in 0 0 255
 
 # Rouge
 out 255 0 0
+
+# Vert
+tower_base 0 255 0
+
 graph 9
 node 0 1 0 1
 node 1 1 1 2
