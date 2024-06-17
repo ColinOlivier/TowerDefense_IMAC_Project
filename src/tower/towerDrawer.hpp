@@ -4,13 +4,13 @@
 #include "tower/tower.hpp"
 #include <glad/glad.h>
 
-
 struct TowerDrawer
 {
     void loadTowerTexture();
-    void drawTowers(std::vector<Tower>& towersVector);
+    void drawTowers(std::vector<Tower> &towersVector);
 
     void setup();
 
-    GLuint _texture{};
+    GLuint _texture1{};
+    GLuint _texture2{};
 };

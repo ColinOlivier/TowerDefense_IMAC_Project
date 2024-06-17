@@ -23,7 +23,7 @@ struct EnemyHandler
 
     std::queue<Position> positionQueue{};
     std::queue<Position> positionQueue_second{};
-    std::queue<Position> positionQueue_third{};
+    std::queue<Position> positionQueue_third;
 
     Enemy generateEnemy(Name name, Position initialOffset);
     std::vector<Enemy> generateEnemies(Name name, int numberEnemies, float offsetStep);

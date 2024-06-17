@@ -1,5 +1,4 @@
 #include "enemyHandler.hpp"
-#include "player/player.hpp"
 #include "GameManager.hpp"
 #include <GLFW/glfw3.h>
 #include <ctime>
@@ -15,21 +14,21 @@ EnemyHandler::EnemyHandler(GameManager *gameManager_ptr)
 
 Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
 {
-    Enemy enemy{name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
+    Enemy enemy{this, name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
 
     if (name == Name::Milan)
     {
-        enemy = {name, initialOffset, 10, 0.1f, 5};
+        enemy = Enemy{this, name, initialOffset, 10, 0.1f, 5};
     }
 
     if (name == Name::Guimiel)
     {
-        enemy = {name, initialOffset, 10, 5, 5};
+        enemy = Enemy{this, name, initialOffset, 10, 5, 5};
     }
 
     if (name == Name::Elea)
     {
-        enemy = {name, initialOffset, 10, 5, 5};
+        enemy = Enemy{this, name, initialOffset, 10, 5, 5};
     }
 
     return enemy;
@@ -52,15 +51,6 @@ void EnemyHandler::setup()
     previousTime = 0.0;
     // enemyDrawer = EnemyDrawer();
     enemyDrawer.setup();
-    listEnemies = generateEnemies(Name::Milan, 3, 0.15);
-
-    // positionQueue = données Colin
-    positionQueue.push({0, 0.5});
-    positionQueue.push({0., 0});
-    positionQueue.push({-0.5, -0.25});
-    positionQueue.push({0.25, 0.5});
-    positionQueue.push({1.5, 1});
-    positionQueue.push({-1, 0});
 }
 
 void EnemyHandler::update()
@@ -75,26 +65,30 @@ void EnemyHandler::update()
     std::vector<size_t> deadEnemiesIndices_second;
     std::vector<size_t> deadEnemiesIndices_third;
 
-    for (size_t i = 0; i < listEnemies.size(); i++)
+    // 1ERE VAGUE
+    if (waveCount > 0)
     {
-        float time = static_cast<float>(ellapsedTime);
-        listEnemies[i].queueMove(time, positionQueue);
-        // Générer des dégâts aléatoires entre 0 et 1
-        float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
-        listEnemies[0].hurt(randomDamage);
-        if (listEnemies[i].isDead)
+        for (size_t i = 0; i < listEnemies.size(); i++)
         {
-            deadEnemiesIndices.push_back(i);
+            float time = static_cast<float>(ellapsedTime);
+            listEnemies[i].queueMove(time, positionQueue);
+            // Générer des dégâts aléatoires entre 0 et 1
+            float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
+            listEnemies[0].hurt(randomDamage);
+            if (listEnemies[i].isDead)
+            {
+                deadEnemiesIndices.push_back(i);
+            }
+        }
+
+        for (auto it = deadEnemiesIndices.rbegin(); it != deadEnemiesIndices.rend(); ++it)
+        {
+            listEnemies.erase(listEnemies.begin() + *it);
         }
     }
 
-    for (auto it = deadEnemiesIndices.rbegin(); it != deadEnemiesIndices.rend(); ++it)
-    {
-        listEnemies.erase(listEnemies.begin() + *it);
-    }
-
     // 2EME VAGUE
-    if (waveCount > 0)
+    if (waveCount > 1)
     {
         for (size_t i = 0; i < listEnemies_second.size(); i++)
         {
@@ -116,7 +110,7 @@ void EnemyHandler::update()
     }
 
     // 3EME VAGUE
-    if (waveCount > 1)
+    if (waveCount > 2)
     {
         for (size_t i = 0; i < listEnemies_third.size(); i++)
         {

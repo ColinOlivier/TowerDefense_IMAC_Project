@@ -1,6 +1,6 @@
 #include "utils.hpp"
 #include "enemy/enemy.hpp"
-#include "player/player.hpp"
+#include "GameManager.hpp"
 
 #include <iostream>
 #include <queue>
@@ -63,12 +63,12 @@ void Enemy::hurt(float dammage)
         return;
     }
     lifePoints = currentLifePoints;
-    // std::cout << lifePoints << std::endl;
 };
 
 void Enemy::die()
 {
     isDead = true;
-    // TODO
-    // cagnotte = reward;
+    _enemyHandler->_gameManager_ptr->addPoints(reward);
+    std::cout << _enemyHandler->_gameManager_ptr->score << std::endl;
+    // addPoints(reward);
 }
