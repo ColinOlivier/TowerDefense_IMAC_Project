@@ -24,4 +24,7 @@ struct TileData
     int getConnectionIndex() const;
     bool isCorner() const;
 
+    bool isPathType();
 };
+
+bool isPathType(TileType type);

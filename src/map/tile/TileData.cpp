@@ -32,3 +32,11 @@ bool TileData::isCorner() const {
 
     return false;
 }
+
+bool TileData::isPathType() {
+    return type == TileType::PATH || type == TileType::IN || type == TileType::OUT;
+}
+
+bool isPathType(TileType type) {
+    return type == TileType::PATH || type == TileType::IN || type == TileType::OUT;
+}
