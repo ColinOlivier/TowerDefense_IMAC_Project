@@ -13,8 +13,6 @@ struct EnemyHandler
     EnemyHandler(GameManager *gameManager_ptr);
 
     std::vector<Enemy> listEnemies{};
-    std::vector<Enemy> listEnemies_second{};
-    std::vector<Enemy> listEnemies_third{};
 
     double previousTime{0};
     EnemyDrawer enemyDrawer{};
@@ -22,11 +20,9 @@ struct EnemyHandler
     int waveCount{0};
 
     std::queue<Position> positionQueue{};
-    std::queue<Position> positionQueue_second{};
-    std::queue<Position> positionQueue_third;
 
-    Enemy generateEnemy(Name name, Position initialOffset);
-    std::vector<Enemy> generateEnemies(Name name, int numberEnemies, float offsetStep);
+    Enemy generateEnemy(Name name, Position initialOffset, std::queue<Position> &queuePosition);
+    std::vector<Enemy> generateEnemies(Name name, int numberEnemies, float offsetStep, std::queue<Position> &queuePosition);
 
     void setup();
     void update();

@@ -12,7 +12,7 @@ EnemyHandler::EnemyHandler(GameManager *gameManager_ptr)
     _gameManager_ptr = gameManager_ptr;
 }
 
-Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
+Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset, std::queue<Position> &queuePosition)
 {
     Enemy enemy{this, name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
 
@@ -31,17 +31,19 @@ Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset)
         enemy = Enemy{this, name, initialOffset, 10, 5, 5};
     }
 
+    enemy.positionQueue = queuePosition;
+
     return enemy;
 }
 
-std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies, float offsetStep)
+std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies, float offsetStep, std::queue<Position> &queuePosition)
 {
     std::vector<Enemy> listEnemies{};
     // float offsetStep = 0.2f;  Distance entre les ennemis
     for (int i = 0; i < numberEnemies; i++)
     {
         Position offset{offsetStep * i, offsetStep * i}; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
-        listEnemies.push_back(generateEnemy(name, offset));
+        listEnemies.push_back(generateEnemy(name, offset, queuePosition));
     }
     return listEnemies;
 }
@@ -62,8 +64,6 @@ void EnemyHandler::update()
     previousTime = currentTime;
 
     std::vector<size_t> deadEnemiesIndices;
-    std::vector<size_t> deadEnemiesIndices_second;
-    std::vector<size_t> deadEnemiesIndices_third;
 
     // 1ERE VAGUE
     if (waveCount > 0)
@@ -71,64 +71,60 @@ void EnemyHandler::update()
         for (size_t i = 0; i < listEnemies.size(); i++)
         {
             float time = static_cast<float>(ellapsedTime);
-            listEnemies[i].queueMove(time, positionQueue);
+            listEnemies[i].queueMove(time, listEnemies[i].positionQueue);
             // Générer des dégâts aléatoires entre 0 et 1
-            float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
-            listEnemies[0].hurt(randomDamage);
+            Position towerZone;
+            Position towerSize;
+
+            // float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
+
+            // listEnemies[i].hurt(randomDamage /*tower.power*/);
+
             if (listEnemies[i].isDead)
             {
                 deadEnemiesIndices.push_back(i);
             }
-        }
-
-        for (auto it = deadEnemiesIndices.rbegin(); it != deadEnemiesIndices.rend(); ++it)
-        {
-            listEnemies.erase(listEnemies.begin() + *it);
         }
     }
 
     // 2EME VAGUE
     if (waveCount > 1)
     {
-        for (size_t i = 0; i < listEnemies_second.size(); i++)
+        for (size_t i = 0; i < listEnemies.size(); i++)
         {
             float time = static_cast<float>(ellapsedTime);
-            listEnemies_second[i].queueMove(time, positionQueue_second);
+            listEnemies[i].queueMove(time, positionQueue);
             // Générer des dégâts aléatoires entre 0 et 1
-            float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
-            listEnemies_second[0].hurt(randomDamage);
-            if (listEnemies_second[i].isDead)
+            // float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
+            // listEnemies_second[0].hurt(randomDamage);
+            if (listEnemies[i].isDead)
             {
-                deadEnemiesIndices_second.push_back(i);
+                deadEnemiesIndices.push_back(i);
             }
-        }
-        // Supprimer les ennemis morts en partant de la fin pour éviter les problèmes d'indices
-        for (auto it = deadEnemiesIndices_second.rbegin(); it != deadEnemiesIndices_second.rend(); ++it)
-        {
-            listEnemies_second.erase(listEnemies_second.begin() + *it);
         }
     }
 
     // 3EME VAGUE
     if (waveCount > 2)
     {
-        for (size_t i = 0; i < listEnemies_third.size(); i++)
+        for (size_t i = 0; i < listEnemies.size(); i++)
         {
             float time = static_cast<float>(ellapsedTime);
-            listEnemies_third[i].queueMove(time, positionQueue_third);
+            listEnemies[i].queueMove(time, positionQueue);
             // Générer des dégâts aléatoires entre 0 et 1
-            float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
-            listEnemies_third[0].hurt(randomDamage);
-            if (listEnemies_third[i].isDead)
+            // float randomDamage = (static_cast<float>(rand()) / static_cast<float>(RAND_MAX)) * 0.05;
+            // listEnemies_third[0].hurt(randomDamage);
+            if (listEnemies[i].isDead)
             {
-                deadEnemiesIndices_third.push_back(i);
+                deadEnemiesIndices.push_back(i);
             }
         }
         // Supprimer les ennemis morts en partant de la fin pour éviter les problèmes d'indices
-        for (auto it = deadEnemiesIndices_third.rbegin(); it != deadEnemiesIndices_third.rend(); ++it)
-        {
-            listEnemies_third.erase(listEnemies_third.begin() + *it);
-        }
+    }
+
+    for (auto it = deadEnemiesIndices.rbegin(); it != deadEnemiesIndices.rend(); ++it)
+    {
+        listEnemies.erase(listEnemies.begin() + *it);
     }
 }
 
@@ -137,13 +133,5 @@ void EnemyHandler::render()
     for (size_t i = 0; i < listEnemies.size(); i++)
     {
         enemyDrawer.drawEnemy(listEnemies[i]);
-    }
-    for (size_t i = 0; i < listEnemies_second.size(); i++)
-    {
-        enemyDrawer.drawEnemy(listEnemies_second[i]);
-    }
-    for (size_t i = 0; i < listEnemies_third.size(); i++)
-    {
-        enemyDrawer.drawEnemy(listEnemies_third[i]);
     }
 }

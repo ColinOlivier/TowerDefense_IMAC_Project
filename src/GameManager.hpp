@@ -12,6 +12,7 @@
 
 #include "enemy/enemyHandler.hpp"
 #include "points/points.hpp"
+#include "screen/gameOver.hpp"
 
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
@@ -24,7 +25,7 @@
 #define IDT_FILE_PATH "../../data/map.idt"
 #define MAP_PNG_PATH "images/map.png"
 
-struct App;
+class App;
 
 struct GameManager
 {
@@ -48,10 +49,15 @@ public:
 
     std::array<TileType, GRID_SIZE * GRID_SIZE> getMapTileTypeArray();
 
+    GameOver _gameOver{};
+
     ExitButton _exitButton{};
     StartButton _startButton{};
     PauseButton _pauseButton{};
     Points _points{};
+
+    bool over{false};
+
     void setup();
     void update();
     void render();
@@ -64,6 +70,8 @@ public:
     void clickForExit(Position positionClick, GLFWwindow *window);
     void clickForStart(Position positionClick);
     void clickForPause(Position positionClick);
+
+    void loadGameOver();
 
     bool isPause = true;
 };
