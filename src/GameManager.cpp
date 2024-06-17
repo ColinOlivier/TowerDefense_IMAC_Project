@@ -1,5 +1,6 @@
 #include "GameManager.hpp"
 #include "App.hpp"
+#include <sstream>
 
 GameManager::GameManager(App *app)
 {
@@ -95,6 +96,19 @@ void GameManager::runWave()
     _enemyHandler.waveCount++;
     if (_enemyHandler.waveCount == 1)
     {
+        _enemyHandler.listEnemies = _enemyHandler.generateEnemies(Name::Milan, 3, 0.15);
+
+        // positionQueue = données Colin
+        _enemyHandler.positionQueue.push({0, 0.5});
+        _enemyHandler.positionQueue.push({0., 0});
+        _enemyHandler.positionQueue.push({-0.5, -0.25});
+        _enemyHandler.positionQueue.push({0.25, 0.5});
+        _enemyHandler.positionQueue.push({1.5, 1});
+        _enemyHandler.positionQueue.push({-1, 0});
+    }
+
+    if (_enemyHandler.waveCount == 2)
+    {
         _enemyHandler.listEnemies_second = _enemyHandler.generateEnemies(Name::Milan, 5, 0.15);
         _enemyHandler.positionQueue_second.push({0, 0.5});
         _enemyHandler.positionQueue_second.push({0., 0});
@@ -104,7 +118,7 @@ void GameManager::runWave()
         _enemyHandler.positionQueue_second.push({-1, 0});
     }
 
-    if (_enemyHandler.waveCount == 2)
+    if (_enemyHandler.waveCount == 3)
     {
         _enemyHandler.listEnemies_third = _enemyHandler.generateEnemies(Name::Milan, 7, 0.1);
         _enemyHandler.positionQueue_third.push({0, 0.5});
