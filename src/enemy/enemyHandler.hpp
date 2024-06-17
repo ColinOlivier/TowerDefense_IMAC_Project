@@ -9,20 +9,17 @@ struct GameManager;
 
 struct EnemyHandler
 {
-private:
-    GameManager *_gameManager_ptr;
-
-public:
-    EnemyHandler(GameManager *gameManager_ptr);
+    GameManager* _gameManager_ptr;
+    EnemyHandler(GameManager* gameManager_ptr);
 
     std::vector<Enemy> listEnemies{};
     std::vector<Enemy> listEnemies_second{};
     std::vector<Enemy> listEnemies_third{};
 
-    double previousTime{0};
+    double previousTime{ 0 };
     EnemyDrawer enemyDrawer{};
 
-    int waveCount{0};
+    int waveCount{ 0 };
 
     std::queue<Position> positionQueue{};
     std::queue<Position> positionQueue_second{};
