@@ -45,6 +45,15 @@ void GameManager::render()
 
     _enemyHandler.render();
     _towerHandler.render();
+
+    std::string score_text{};
+    std::stringstream stream{};
+
+    stream << std::fixed << "Score: " << score;
+    score_text = stream.str();
+
+    TextRenderer.Label(score_text.c_str(), _app->_width / 2, _app->_height - 4, SimpleText::CENTER);
+    TextRenderer.Render();
 }
 
 void GameManager::setupMapData()
