@@ -155,14 +155,14 @@ void GameManager::runWave()
 
     if (_enemyHandler.waveCount == 2)
     {
-        std::vector<Enemy> secondWave = _enemyHandler.generateEnemies(Name::Milan, 4, 0.15, positionQueue);
+        std::vector<Enemy> secondWave = _enemyHandler.generateEnemies(Name::Guimiel, 4, 0.15, positionQueue);
         _enemyHandler.listEnemies.insert(_enemyHandler.listEnemies.end(), secondWave.begin(), secondWave.end());
     }
 
     if (_enemyHandler.waveCount == 3)
     {
 
-        std::vector<Enemy> thirdWave = _enemyHandler.generateEnemies(Name::Milan, 6, 0.1, positionQueue);
+        std::vector<Enemy> thirdWave = _enemyHandler.generateEnemies(Name::Elea, 6, 0.1, positionQueue);
         _enemyHandler.listEnemies.insert(_enemyHandler.listEnemies.end(), thirdWave.begin(), thirdWave.end());
     }
 
