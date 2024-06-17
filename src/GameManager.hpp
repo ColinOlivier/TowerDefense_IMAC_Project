@@ -15,6 +15,7 @@
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
 #include "button/start.hpp"
+#include "button/pause.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -47,6 +48,7 @@ public:
 
     ExitButton _exitButton{};
     StartButton _startButton{};
+    PauseButton _pauseButton{};
     void setup();
     void update();
     void render();
@@ -58,6 +60,7 @@ public:
 
     void clickForExit(Position positionClick, GLFWwindow *window);
     void clickForStart(Position positionClick);
+    void clickForPause(Position positionClick);
 
     bool isPause = true;
 };

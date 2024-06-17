@@ -23,6 +23,7 @@ void GameManager::setup()
     _towerHandler.setup();
 
     _startButton.setup();
+    _pauseButton.setup();
     _exitButton.setup(); // à laisser à la fin
 }
 
@@ -51,6 +52,7 @@ void GameManager::render()
     _towerHandler.render();
 
     _startButton.render();
+    _pauseButton.render();
     _exitButton.render(); // à garder à la fin
     std::string score_text{};
     std::stringstream stream{};
@@ -161,5 +163,18 @@ void GameManager::clickForStart(Position positionClick)
     {
         _startButton.IsVisible = false;
         isPause = false;
+    }
+}
+
+void GameManager::clickForPause(Position positionClick)
+{
+    if (
+        0.63 < positionClick.x * 2 - 1 &&
+        positionClick.x * 2 - 1 < 0.93 &&
+        0.80 < positionClick.y * (-2) + 1 &&
+        positionClick.y * (-2) + 1 < 0.94)
+    {
+        isPause = true;
+        _startButton.IsVisible = true;
     }
 }

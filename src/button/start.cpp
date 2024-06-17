@@ -8,7 +8,7 @@
 
 void StartButton::loadStartButtonTexture()
 {
-    img::Image exit{img::load(make_absolute_path("images/start_fond.png", true), 4, true)};
+    img::Image exit{img::load(make_absolute_path("images/Button/start_fond.png", true), 4, true)};
     _texture = loadTexture(exit);
 }
 

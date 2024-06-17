@@ -8,7 +8,7 @@
 
 void ExitButton::loadExitButtonTexture()
 {
-    img::Image exit{img::load(make_absolute_path("images/bouton_exit.png", true), 4, true)};
+    img::Image exit{img::load(make_absolute_path("images/Button/bouton_exit.png", true), 4, true)};
     _texture = loadTexture(exit);
 }
 
