@@ -50,12 +50,15 @@ Position Enemy::move(Position begin, Position end, float distanceToTravel)
     Position newPos = {
         begin.x + vecBeginEnd.x * ratio,
         begin.y + vecBeginEnd.y * ratio};
-
+    // std::cout << " Milan selon enemy x : " << newPos.x << " Milan selon enemy y : " << newPos.y << std::endl;
     return newPos;
 }
 
 void Enemy::hurt(float dammage)
 {
+    if (isDead)
+        return;
+
     float currentLifePoints{lifePoints - dammage};
     if (currentLifePoints <= 0)
     {
@@ -69,6 +72,4 @@ void Enemy::die()
 {
     isDead = true;
     _enemyHandler->_gameManager_ptr->addPoints(reward);
-    std::cout << _enemyHandler->_gameManager_ptr->score << std::endl;
-    // addPoints(reward);
 }

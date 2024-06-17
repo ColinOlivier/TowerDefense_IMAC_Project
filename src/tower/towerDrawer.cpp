@@ -34,9 +34,9 @@ void TowerDrawer::drawTowers(std::vector<Tower> &towersVector)
             0.0f);
         // glTranslatef(1.f, 1.f, 0.0f);
         glScalef(0.3f, 0.35f, 0.3f);
-        if(towersVector[i].type == TowerType::basicTower)
+        if (towersVector[i].type == TowerType::basicTower)
             draw_quad_with_texture(_texture1);
-        if(towersVector[i].type == TowerType::pineappleTower)
+        if (towersVector[i].type == TowerType::pineappleTower)
             draw_quad_with_texture(_texture2);
         glPopMatrix();
     }

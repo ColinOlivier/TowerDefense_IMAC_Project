@@ -22,6 +22,8 @@ void GameManager::setup()
     _enemyHandler.setup();
     _towerHandler.setup();
 
+    _gameOver.setup();
+
     _startButton.setup();
     _pauseButton.setup();
     _exitButton.setup(); // à laisser à la fin
@@ -34,6 +36,16 @@ void GameManager::update()
         _enemyHandler.update();
         _towerHandler.update();
     }
+    for (int i{0}; i < _enemyHandler.listEnemies.size(); i++)
+    {
+        if (_enemyHandler.listEnemies[i].positionQueue.empty())
+        {
+            // std::cout << "game over" << std::endl;
+            _gameOver.IsVisible = true;
+            _gameOver.update();
+        }
+    }
+
     render();
 }
 
@@ -93,57 +105,68 @@ void GameManager::clickForCreateTower(Position positionClick)
 {
     if (isPause == false)
     {
-        if (_towerHandler.listTowers.size() >= 6)
+        if (_towerHandler.listTowers.size() >= 5)
         {
             return;
         }
 
-        Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
-        newTower.positionTower = positionClick;
-        _towerHandler.listTowers.push_back(newTower);
-        score -= newTower.price;
+        Tower newTower{_towerHandler.generateTower(TowerType::pineappleTower)};
+        // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
+
+        if (score >= newTower.price)
+        {
+            positionClick.x = positionClick.x * 10;
+            positionClick.y = positionClick.y * 10;
+
+            positionClick.x = std::round(positionClick.x) + 0.5;
+            positionClick.y = std::round(positionClick.y) + 0.5;
+
+            // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
+
+            positionClick.x = positionClick.x / 10;
+            positionClick.y = positionClick.y / 10;
+
+            for (int i{0}; i < _towerHandler.listTowers.size(); i++)
+            {
+                if (_towerHandler.listTowers[i].positionTower == positionClick)
+                    return; // deux tours ne peuvent pas se superposer
+            }
+            newTower.positionTower = positionClick;
+            _towerHandler.listTowers.push_back(newTower);
+            score -= newTower.price;
+        }
     }
 }
 
 void GameManager::runWave()
 {
+    size_t countPos{_enemyHandler.positionQueue.size()};
     _enemyHandler.waveCount++;
+
+    std::queue<Position> positionQueue{};
+
+    positionQueue.push({0, 0.5});
+    positionQueue.push({0., 0});
+
     if (_enemyHandler.waveCount == 1)
     {
-        _enemyHandler.listEnemies = _enemyHandler.generateEnemies(Name::Milan, 3, 0.15);
-
-        // positionQueue = données Colin
-        _enemyHandler.positionQueue.push({0, 0.5});
-        _enemyHandler.positionQueue.push({0., 0});
-        _enemyHandler.positionQueue.push({-0.5, -0.25});
-        _enemyHandler.positionQueue.push({0.25, 0.5});
-        _enemyHandler.positionQueue.push({1.5, 1});
-        _enemyHandler.positionQueue.push({-1, 0});
+        _enemyHandler.listEnemies = _enemyHandler.generateEnemies(Name::Milan, 1, 0.15, positionQueue);
     }
 
     if (_enemyHandler.waveCount == 2)
     {
-        _enemyHandler.listEnemies_second = _enemyHandler.generateEnemies(Name::Milan, 5, 0.15);
-        _enemyHandler.positionQueue_second.push({0, 0.5});
-        _enemyHandler.positionQueue_second.push({0., 0});
-        _enemyHandler.positionQueue_second.push({-0.5, -0.25});
-        _enemyHandler.positionQueue_second.push({0.25, 0.5});
-        _enemyHandler.positionQueue_second.push({1.5, 1});
-        _enemyHandler.positionQueue_second.push({-1, 0});
+        std::vector<Enemy> secondWave = _enemyHandler.generateEnemies(Name::Milan, 4, 0.15, positionQueue);
+        _enemyHandler.listEnemies.insert(_enemyHandler.listEnemies.end(), secondWave.begin(), secondWave.end());
     }
 
     if (_enemyHandler.waveCount == 3)
     {
-        _enemyHandler.listEnemies_third = _enemyHandler.generateEnemies(Name::Milan, 7, 0.1);
-        _enemyHandler.positionQueue_third.push({0, 0.5});
-        _enemyHandler.positionQueue_third.push({0., 0});
-        _enemyHandler.positionQueue_third.push({-0.5, -0.25});
-        _enemyHandler.positionQueue_third.push({0.25, 0.5});
-        _enemyHandler.positionQueue_third.push({1.5, 1});
-        _enemyHandler.positionQueue_third.push({-1, 0});
+
+        std::vector<Enemy> thirdWave = _enemyHandler.generateEnemies(Name::Milan, 6, 0.1, positionQueue);
+        _enemyHandler.listEnemies.insert(_enemyHandler.listEnemies.end(), thirdWave.begin(), thirdWave.end());
     }
 
-    std::cout << _enemyHandler.waveCount << std::endl;
+    // std::cout << _enemyHandler.waveCount << std::endl;
 }
 
 void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
