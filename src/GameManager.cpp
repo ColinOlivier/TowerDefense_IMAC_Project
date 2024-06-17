@@ -105,14 +105,36 @@ void GameManager::clickForCreateTower(Position positionClick)
 {
     if (isPause == false)
     {
-        if (_towerHandler.listTowers.size() >= 6)
+        if (_towerHandler.listTowers.size() >= 5)
         {
             return;
         }
 
-        Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
-        newTower.positionTower = positionClick;
-        _towerHandler.listTowers.push_back(newTower);
+        Tower newTower{_towerHandler.generateTower(TowerType::pineappleTower)};
+        // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
+
+        if (score >= newTower.price)
+        {
+            positionClick.x = positionClick.x * 10;
+            positionClick.y = positionClick.y * 10;
+
+            positionClick.x = std::round(positionClick.x) + 0.5;
+            positionClick.y = std::round(positionClick.y) + 0.5;
+
+            // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
+
+            positionClick.x = positionClick.x / 10;
+            positionClick.y = positionClick.y / 10;
+
+            for (int i{0}; i < _towerHandler.listTowers.size(); i++)
+            {
+                if (_towerHandler.listTowers[i].positionTower == positionClick)
+                    return; // deux tours ne peuvent pas se superposer
+            }
+            newTower.positionTower = positionClick;
+            _towerHandler.listTowers.push_back(newTower);
+            score -= newTower.price;
+        }
     }
 }
 
@@ -143,6 +165,8 @@ void GameManager::runWave()
         std::vector<Enemy> thirdWave = _enemyHandler.generateEnemies(Name::Milan, 6, 0.1, positionQueue);
         _enemyHandler.listEnemies.insert(_enemyHandler.listEnemies.end(), thirdWave.begin(), thirdWave.end());
     }
+
+    // std::cout << _enemyHandler.waveCount << std::endl;
 }
 
 void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
@@ -172,9 +196,9 @@ void GameManager::clickForStart(Position positionClick)
 void GameManager::clickForPause(Position positionClick)
 {
     if (
-        0.63 < positionClick.x * 2 - 1 &&
+        0.73 < positionClick.x * 2 - 1 &&
         positionClick.x * 2 - 1 < 0.93 &&
-        0.80 < positionClick.y * (-2) + 1 &&
+        0.84 < positionClick.y * (-2) + 1 &&
         positionClick.y * (-2) + 1 < 0.94)
     {
         isPause = true;

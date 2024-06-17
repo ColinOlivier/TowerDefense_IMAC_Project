@@ -11,8 +11,11 @@
 
 void TowerDrawer::loadTowerTexture()
 {
+
     img::Image tour{img::load(make_absolute_path("images/Towers/Tour1.png", true), 4, true)};
-    _texture = loadTexture(tour);
+    _texture1 = loadTexture(tour);
+    tour = {img::load(make_absolute_path("images/Towers/tour_ananas.png", true), 4, true)};
+    _texture2 = loadTexture(tour);
 }
 
 void TowerDrawer::setup()
@@ -30,15 +33,11 @@ void TowerDrawer::drawTowers(std::vector<Tower> &towersVector)
             towersVector[i].positionTower.y * (-2) + 1,
             0.0f);
         // glTranslatef(1.f, 1.f, 0.0f);
-        glScalef(0.15f, 0.15f, 0.15f);
-        draw_quad_with_texture(_texture);
-        // Tower tower{};
-        //  if(meter % (shootingRace*10)==0)
-        //  {
-
-        //  }
-        //  meter ++;
-
+        glScalef(0.3f, 0.35f, 0.3f);
+        if (towersVector[i].type == TowerType::basicTower)
+            draw_quad_with_texture(_texture1);
+        if (towersVector[i].type == TowerType::pineappleTower)
+            draw_quad_with_texture(_texture2);
         glPopMatrix();
     }
 }

@@ -32,7 +32,7 @@ void AttackDrawer::drawAttacks(std::vector<Attack> &attacksVector) // render
             attacksVector[i].positionAttack.x * 2 - 1,
             attacksVector[i].positionAttack.y * (-2) + 1,
             0.f);
-        glScalef(0.15f, 0.15f, 0.15f); // remise à l'échelle
+        glScalef(0.2f, 0.2f, 0.2f); // remise à l'échelle
         draw_quad_with_texture(_texture);
         glPopMatrix();
     }

@@ -44,7 +44,7 @@ public:
 
     SimpleText TextRenderer{};
 
-    int score{0};
+    int score{30};
     void addPoints(int reward);
 
     std::array<TileType, GRID_SIZE * GRID_SIZE> getMapTileTypeArray();

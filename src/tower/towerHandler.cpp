@@ -50,16 +50,16 @@ Tower TowerHandler::generateTower(TowerType type)
     Tower tower{};
     if (type == TowerType::basicTower)
     {
-        tower = {x, y, 5, 25, 0.5};
+        tower = {{x, y}, type, 20, 5, 25, 0.5};
     }
     else if (type == TowerType::pineappleTower)
     {
-        tower = {x, y, 15, 10, 2};
+        tower = {{x, y}, type, 30, 15, 10, 2};
     }
-    else if (type == TowerType::hiveTower)
-    {
-        tower = {x, y, 20, 15, 0.25};
-    }
+    // else if (type == TowerType::hiveTower)
+    // {
+    //     tower = {x, y, 30, 20, 15, 0.25};
+    // }
     return tower;
 }
 
