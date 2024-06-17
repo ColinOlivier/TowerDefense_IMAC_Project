@@ -72,3 +72,24 @@ std::vector<Tower> TowerHandler::generateTowers(TowerType type, int numberTower)
     }
     return listTowers;
 }
+
+bool TowerHandler::canBuild(Position clickPos)
+{
+    if (listTowers.size() >= 5)
+        return false;
+
+    clickPos = clickPos * 10;
+
+    int X = (int)std::round(clickPos.x);
+    int Y = (int)std::round(clickPos.y);
+    std::cout << X << "/" << Y << std::endl;
+
+    TileData tile = _gameManager_ptr->_mapData.tilesArray[X + Y * GRID_SIZE];
+
+    std::cout << (int)tile.type << std::endl;
+
+    if (tile.type != TileType::TOWER_BASE)
+        return false;
+
+    return true;
+}

@@ -23,4 +23,6 @@ public:
     void render();
     Tower generateTower(TowerType type);
     std::vector<Tower> generateTowers(TowerType type, int numberTower);
+
+    bool canBuild(Position clickPos);
 };
