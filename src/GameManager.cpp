@@ -20,11 +20,12 @@ void GameManager::setup()
 
     _enemyHandler.setup();
     _towerHandler.setup();
+
+    _exitButton.setup();
 }
 
 void GameManager::update()
 {
-
     _enemyHandler.update();
     _towerHandler.update();
 
@@ -44,28 +45,23 @@ void GameManager::render()
 
     _enemyHandler.render();
     _towerHandler.render();
-
-    // TextRenderer.Label(charScore, 500, 500, SimpleText::CENTER);
-    // TextRenderer.Render();
-
-    std::string score_text{};
-    std::stringstream stream{};
-
-    stream << std::fixed << "Score: " << score;
-    score_text = stream.str();
-
-    TextRenderer.Label(score_text.c_str(), _app->_width / 2, _app->_height - 4, SimpleText::CENTER);
-    TextRenderer.Render();
 }
 
 void GameManager::setupMapData()
+{
+    std::array<TileType, GRID_SIZE * GRID_SIZE> mapTileTypeArray = getMapTileTypeArray();
+    _mapData = generateMap(mapTileTypeArray);
+    // _mapData.setupGraph();
+}
+
+std::array<TileType, GRID_SIZE * GRID_SIZE> GameManager::getMapTileTypeArray()
 {
     std::vector<std::string> idtFileContent = _idtReader.readTextFile(IDT_FILE_PATH);
     std::array<Color, GRID_SIZE * GRID_SIZE> mapColorsArray = _mapPNGReader.getMapColorsArray(make_absolute_path(MAP_PNG_PATH, true));
 
     std::unordered_map<Color, TileType> colorMap = _idtReader.getColorMap(idtFileContent);
 
-    _mapData.setTilesArray(_mapPNGReader.getMapTileTypeArray(mapColorsArray, colorMap));
+    return _mapPNGReader.getMapTileTypeArray(mapColorsArray, colorMap);
 }
 
 void GameManager::addPoints(int reward)
@@ -88,7 +84,6 @@ void GameManager::clickForCreateTower(Position positionClick)
 void GameManager::runWave()
 {
     _enemyHandler.waveCount++;
-
     if (_enemyHandler.waveCount == 1)
     {
         _enemyHandler.listEnemies_second = _enemyHandler.generateEnemies(Name::Milan, 5, 0.15);
@@ -112,4 +107,17 @@ void GameManager::runWave()
     }
 
     std::cout << _enemyHandler.waveCount << std::endl;
+}
+
+void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
+{
+    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y * (-2) + 1;
+    if (
+        -0.93 < positionClick.x * 2 - 1 &&
+        positionClick.x * 2 - 1 < -0.73 &&
+        0.80 < positionClick.y * (-2) + 1 &&
+        positionClick.y * (-2) + 1 < 0.94)
+    {
+        glfwSetWindowShouldClose(window, true);
+    }
 }

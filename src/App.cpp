@@ -100,7 +100,7 @@ void App::key_callback(GLFWwindow *window, int key, int scancode, int action, in
     }
 }
 
-void App::mouse_button_callback(int button, int action, int mods)
+void App::mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
     if (button != GLFW_MOUSE_BUTTON_LEFT || action != GLFW_PRESS)
     {
@@ -109,6 +109,8 @@ void App::mouse_button_callback(int button, int action, int mods)
 
     Position positionTower{_xPosCur / _width, _yPosCur / _height};
     _gameManager.clickForCreateTower(positionTower);
+    Position positionExitButton{_xPosCur / _width, _yPosCur / _height};
+    _gameManager.clickForExit(positionExitButton, window);
 }
 
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)

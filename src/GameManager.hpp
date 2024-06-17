@@ -13,6 +13,10 @@
 #include "enemy/enemyHandler.hpp"
 
 #include "tower/towerHandler.hpp"
+#include "button/exit.hpp"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #define IDT_FILE_PATH "../../data/map.idt"
 #define MAP_PNG_PATH "images/map.png"
@@ -28,6 +32,7 @@ private:
 
     MapData _mapData;
     MapDrawer _mapDrawer;
+    ExitButton _exitButton{};
 
 public:
     GameManager(App *app);
@@ -39,12 +44,18 @@ public:
     int score{0};
     void addPoints(int reward);
 
+    EnemyHandler _enemyHandler{this};
+    TowerHandler _towerHandler{this};
+    std::array<TileType, GRID_SIZE * GRID_SIZE> getMapTileTypeArray();
+
     void setup();
     void update();
     void render();
-
     void setupMapData();
+
     void clickForCreateTower(Position positionClick);
 
     void runWave();
+
+    void clickForExit(Position positionClick, GLFWwindow *window);
 };
