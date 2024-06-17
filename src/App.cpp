@@ -111,6 +111,8 @@ void App::mouse_button_callback(GLFWwindow *window, int button, int action, int 
     _gameManager.clickForCreateTower(positionTower);
     Position positionExitButton{_xPosCur / _width, _yPosCur / _height};
     _gameManager.clickForExit(positionExitButton, window);
+    Position positionStartButton{_xPosCur / _width, _yPosCur / _height};
+    _gameManager.clickForStart(positionStartButton);
 }
 
 void App::scroll_callback(double /*xoffset*/, double /*yoffset*/)

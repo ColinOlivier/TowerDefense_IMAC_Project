@@ -22,14 +22,17 @@ void GameManager::setup()
     _enemyHandler.setup();
     _towerHandler.setup();
 
-    _exitButton.setup();
+    _startButton.setup();
+    _exitButton.setup(); // à laisser à la fin
 }
 
 void GameManager::update()
 {
-    _enemyHandler.update();
-    _towerHandler.update();
-
+    if (isPause == false)
+    {
+        _enemyHandler.update();
+        _towerHandler.update();
+    }
     render();
 }
 
@@ -47,6 +50,8 @@ void GameManager::render()
     _enemyHandler.render();
     _towerHandler.render();
 
+    _startButton.render();
+    _exitButton.render(); // à garder à la fin
     std::string score_text{};
     std::stringstream stream{};
 
@@ -81,14 +86,17 @@ void GameManager::addPoints(int reward)
 
 void GameManager::clickForCreateTower(Position positionClick)
 {
-    if (_towerHandler.listTowers.size() >= 6)
+    if (isPause == false)
     {
-        return;
-    }
+        if (_towerHandler.listTowers.size() >= 6)
+        {
+            return;
+        }
 
     Tower newTower{_towerHandler.generateTower(TowerType::basicTower)};
     newTower.positionTower = positionClick;
     _towerHandler.listTowers.push_back(newTower);
+    }
 }
 
 void GameManager::runWave()
@@ -134,7 +142,6 @@ void GameManager::runWave()
 
 void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
 {
-    std::cout << positionClick.x * 2 - 1 << " " << positionClick.y * (-2) + 1;
     if (
         -0.93 < positionClick.x * 2 - 1 &&
         positionClick.x * 2 - 1 < -0.73 &&
@@ -142,5 +149,17 @@ void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
         positionClick.y * (-2) + 1 < 0.94)
     {
         glfwSetWindowShouldClose(window, true);
+    }
+}
+
+void GameManager::clickForStart(Position positionClick)
+{
+    if (-0.80 < positionClick.x * 2 - 1 &&
+        positionClick.x * 2 - 1 < 0.8 &&
+        -0.20 < positionClick.y * (-2) + 1 &&
+        positionClick.y * (-2) + 1 < 0.2)
+    {
+        _startButton.IsVisible = false;
+        isPause = false;
     }
 }

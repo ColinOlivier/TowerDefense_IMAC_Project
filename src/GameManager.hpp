@@ -14,6 +14,7 @@
 
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
+#include "button/start.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -32,8 +33,6 @@ private:
 
     MapData _mapData;
     MapDrawer _mapDrawer;
-    ExitButton _exitButton{};
-
 public:
     GameManager(App *app);
     EnemyHandler _enemyHandler{this};
@@ -46,6 +45,8 @@ public:
 
     std::array<TileType, GRID_SIZE * GRID_SIZE> getMapTileTypeArray();
 
+    ExitButton _exitButton{};
+    StartButton _startButton{};
     void setup();
     void update();
     void render();
@@ -56,4 +57,7 @@ public:
     void runWave();
 
     void clickForExit(Position positionClick, GLFWwindow *window);
+    void clickForStart(Position positionClick);
+
+    bool isPause = true;
 };
