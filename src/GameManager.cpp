@@ -172,9 +172,9 @@ void GameManager::clickForStart(Position positionClick)
 void GameManager::clickForPause(Position positionClick)
 {
     if (
-        0.63 < positionClick.x * 2 - 1 &&
+        0.73 < positionClick.x * 2 - 1 &&
         positionClick.x * 2 - 1 < 0.93 &&
-        0.80 < positionClick.y * (-2) + 1 &&
+        0.84 < positionClick.y * (-2) + 1 &&
         positionClick.y * (-2) + 1 < 0.94)
     {
         isPause = true;
