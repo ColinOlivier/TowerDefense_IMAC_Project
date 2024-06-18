@@ -14,12 +14,12 @@
 #include "points/points.hpp"
 #include "screen/gameOver.hpp"
 #include "screen/win.hpp"
+#include "goal/goalDrawer.hpp"
 
 #include "tower/towerHandler.hpp"
 #include "button/exit.hpp"
 #include "button/start.hpp"
 #include "button/pause.hpp"
-
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -54,10 +54,11 @@ public:
     GameOver _gameOver{};
     Win _win{};
 
+    GoalDrawer _goalDrawer{};
     ExitButton _exitButton{};
     StartButton _startButton{};
     PauseButton _pauseButton{};
-    
+
     Points _points{};
 
     bool over{false};
