@@ -74,10 +74,10 @@ void GameManager::render()
 
     _points.render();
 
+    _goalDrawer.render(_goalDrawer);
     _startButton.render();
     _pauseButton.render();
 
-    _goalDrawer.render(_goalDrawer);
 
     std::string score_text{};
     std::stringstream stream{};
