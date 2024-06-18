@@ -2,7 +2,7 @@
 #include "App.hpp"
 #include <sstream>
 
-GameManager::GameManager(App *app)
+GameManager::GameManager(App* app)
 {
     _app = app;
 }
@@ -38,19 +38,20 @@ void GameManager::update()
         _enemyHandler.update();
         _towerHandler.update();
     }
-    for (int i{0}; i < _enemyHandler.listEnemies.size(); i++)
+    for (int i{ 0 }; i < _enemyHandler.listEnemies.size(); i++)
     {
         if (_enemyHandler.listEnemies[i].positionQueue.empty())
         {
             // std::cout << "game over" << std::endl;
             _gameOver.IsVisible = true;
-            _gameOver.render();
+            isPause = true;
+            break;
         }
-        if(_enemyHandler.listEnemies.size() == 0 && _enemyHandler.waveCount == 3)
-        {
-            _win.IsVisible = true;
-            _win.render();
-        }
+    }
+    if (_enemyHandler.listEnemies.size() == 0 && _enemyHandler.waveCount == 3)
+    {
+        _win.IsVisible = true;
+        isPause = true;
     }
 
     render();
@@ -84,19 +85,22 @@ void GameManager::render()
 
     TextRenderer.Label(score_text.c_str(), (_app->_width / 2) + 30, _app->_height / 16, SimpleText::CENTER);
     TextRenderer.Render();
+
+    _gameOver.render();
+    _win.render();
 }
 
 void GameManager::setupMapData()
 {
-    std::array<TileType, GRID_SIZE * GRID_SIZE> mapTileTypeArray = getMapTileTypeArray();
+    std::array<TileType, GRID_SIZE* GRID_SIZE> mapTileTypeArray = getMapTileTypeArray();
     _mapData = generateMap(mapTileTypeArray);
     // _mapData.setupGraph();
 }
 
-std::array<TileType, GRID_SIZE * GRID_SIZE> GameManager::getMapTileTypeArray()
+std::array<TileType, GRID_SIZE* GRID_SIZE> GameManager::getMapTileTypeArray()
 {
     std::vector<std::string> idtFileContent = _idtReader.readTextFile(IDT_FILE_PATH);
-    std::array<Color, GRID_SIZE * GRID_SIZE> mapColorsArray = _mapPNGReader.getMapColorsArray(make_absolute_path(MAP_PNG_PATH, true));
+    std::array<Color, GRID_SIZE* GRID_SIZE> mapColorsArray = _mapPNGReader.getMapColorsArray(make_absolute_path(MAP_PNG_PATH, true));
 
     std::unordered_map<Color, TileType> colorMap = _idtReader.getColorMap(idtFileContent);
 
@@ -117,7 +121,7 @@ void GameManager::clickForCreateTower(Position positionClick)
             return;
         }
 
-        Tower newTower{_towerHandler.generateTower(TowerType::pineappleTower)};
+        Tower newTower{ _towerHandler.generateTower(TowerType::pineappleTower) };
         // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
 
         if (score >= newTower.price)
@@ -126,14 +130,14 @@ void GameManager::clickForCreateTower(Position positionClick)
             positionClick.y = positionClick.y * 10;
 
             positionClick.x = std::round(positionClick.x) + 0.5;
-            positionClick.y = std::round(positionClick.y)-1,5;
+            positionClick.y = std::round(positionClick.y) - 1, 5;
 
             // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
 
             positionClick.x = positionClick.x / 10;
             positionClick.y = positionClick.y / 10;
 
-            for (int i{0}; i < _towerHandler.listTowers.size(); i++)
+            for (int i{ 0 }; i < _towerHandler.listTowers.size(); i++)
             {
                 if (_towerHandler.listTowers[i].positionTower == positionClick)
                     return; // deux tours ne peuvent pas se superposer
@@ -147,13 +151,13 @@ void GameManager::clickForCreateTower(Position positionClick)
 
 void GameManager::runWave()
 {
-    size_t countPos{_enemyHandler.positionQueue.size()};
+    size_t countPos{ _enemyHandler.positionQueue.size() };
     _enemyHandler.waveCount++;
 
     std::queue<Position> positionQueue{};
 
-    positionQueue.push({0, 0.5});
-    positionQueue.push({0., 0});
+    positionQueue.push({ 0, 0.5 });
+    positionQueue.push({ 0., 0 });
 
     if (_enemyHandler.waveCount == 1)
     {
@@ -176,7 +180,7 @@ void GameManager::runWave()
     // std::cout << _enemyHandler.waveCount << std::endl;
 }
 
-void GameManager::clickForExit(Position positionClick, GLFWwindow *window)
+void GameManager::clickForExit(Position positionClick, GLFWwindow* window)
 {
     if (
         -0.93 < positionClick.x * 2 - 1 &&
