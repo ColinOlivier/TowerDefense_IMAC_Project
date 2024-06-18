@@ -124,7 +124,8 @@ void EnemyHandler::update()
 
     for (auto it = deadEnemiesIndices.rbegin(); it != deadEnemiesIndices.rend(); ++it)
     {
-        listEnemies.erase(listEnemies.begin() + *it);
+        if (*it < listEnemies.size())
+            listEnemies.erase(listEnemies.begin() + *it);
     }
 }
 
