@@ -161,6 +161,8 @@ void GameManager::runWave()
 
     positionQueue.push({ -0.7f, 0.8f });
     positionQueue.push({ -0.7f, -1.f });
+    positionQueue.push({ 0.4f, -1.f });
+    positionQueue.push({ 0.4f, 0.2.f });
     positionQueue.push({ 0, 0 });
 
     if (_enemyHandler.waveCount == 1)
