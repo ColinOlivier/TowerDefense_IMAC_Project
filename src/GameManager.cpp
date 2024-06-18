@@ -126,7 +126,7 @@ void GameManager::clickForCreateTower(Position positionClick)
             positionClick.y = positionClick.y * 10;
 
             positionClick.x = std::round(positionClick.x) + 0.5;
-            positionClick.y = std::round(positionClick.y) + 0.5;
+            positionClick.y = std::round(positionClick.y)-1,5;
 
             // std::cout << positionClick.x << "/" << positionClick.y << std::endl;
 

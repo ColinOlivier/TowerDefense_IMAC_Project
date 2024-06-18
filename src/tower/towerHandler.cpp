@@ -78,10 +78,11 @@ bool TowerHandler::canBuild(Position clickPos)
     if (listTowers.size() >= 5)
         return false;
 
-    clickPos = clickPos * 10;
+    clickPos.x = clickPos.x * 10;
+    clickPos.y = clickPos.y * -10 + 10;
 
-    int X = (int)std::round(clickPos.x);
-    int Y = (int)std::round(clickPos.y);
+    int X = (int)std::roundf(clickPos.x);
+    int Y = (int)std::roundf(clickPos.y);
     std::cout << X << "/" << Y << std::endl;
 
     TileData tile = _gameManager_ptr->_mapData.tilesArray[X + Y * GRID_SIZE];
