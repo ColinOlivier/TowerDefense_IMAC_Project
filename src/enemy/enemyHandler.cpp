@@ -7,28 +7,28 @@
 #include <chrono>
 #include <thread>
 
-EnemyHandler::EnemyHandler(GameManager* gameManager_ptr)
+EnemyHandler::EnemyHandler(GameManager *gameManager_ptr)
 {
     _gameManager_ptr = gameManager_ptr;
 }
 
-Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset, std::queue<Position>& queuePosition)
+Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset, std::queue<Position> &queuePosition)
 {
-    Enemy enemy{ this, name, initialOffset, 10, 0.1f, 5 }; // Utiliser le décalage initial
+    Enemy enemy{this, name, initialOffset, 10, 0.1f, 5}; // Utiliser le décalage initial
 
     if (name == Name::Milan)
     {
-        enemy = Enemy{ this, name, initialOffset, 10, 0.1f, 5 };
+        enemy = Enemy{this, name, initialOffset, 10, 0.1f, 5};
     }
 
     if (name == Name::Guimiel)
     {
-        enemy = Enemy{ this, name, initialOffset, 10, 0.5f, 5 };
+        enemy = Enemy{this, name, initialOffset, 10, 0.3f, 5};
     }
 
     if (name == Name::Elea)
     {
-        enemy = Enemy{ this, name, initialOffset, 10, 0.05f, 5 };
+        enemy = Enemy{this, name, initialOffset, 10, 0.6f, 5};
     }
 
     enemy.positionQueue = queuePosition;
@@ -36,13 +36,13 @@ Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset, std::queue<
     return enemy;
 }
 
-std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies, float offsetStep, std::queue<Position>& queuePosition)
+std::vector<Enemy> EnemyHandler::generateEnemies(Name name, int numberEnemies, float offsetStep, std::queue<Position> &queuePosition)
 {
     std::vector<Enemy> listEnemies{};
     // float offsetStep = 0.2f;  Distance entre les ennemis
     for (int i = 0; i < numberEnemies; i++)
     {
-        Position offset{ offsetStep * i + -0.7f, offsetStep * i + 0.8f }; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
+        Position offset{offsetStep * i + -0.7f, offsetStep * i + 0.8f}; // Décaler chaque ennemi de 'offsetStep' sur l'axe x
         listEnemies.push_back(generateEnemy(name, offset, queuePosition));
     }
     return listEnemies;
@@ -59,8 +59,8 @@ void EnemyHandler::update()
 {
 
     // Move
-    const float currentTime{ (float)glfwGetTime() };
-    double ellapsedTime{ currentTime - previousTime };
+    const float currentTime{(float)glfwGetTime()};
+    double ellapsedTime{currentTime - previousTime};
     previousTime = currentTime;
 
     std::vector<size_t> deadEnemiesIndices;
