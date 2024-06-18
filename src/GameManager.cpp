@@ -76,7 +76,6 @@ void GameManager::render()
 
     _startButton.render();
     _pauseButton.render();
-    _exitButton.render(); // à garder à la fin
 
     _goalDrawer.render(_goalDrawer);
 
@@ -91,6 +90,7 @@ void GameManager::render()
 
     _gameOver.render();
     _win.render();
+    _exitButton.render(); // à garder à la fin
 }
 
 void GameManager::setupMapData()
