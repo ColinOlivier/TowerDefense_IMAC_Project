@@ -23,12 +23,12 @@ Enemy EnemyHandler::generateEnemy(Name name, Position initialOffset, std::queue<
 
     if (name == Name::Guimiel)
     {
-        enemy = Enemy{this, name, initialOffset, 10, 5, 5};
+        enemy = Enemy{this, name, initialOffset, 10, 0.5f, 5};
     }
 
     if (name == Name::Elea)
     {
-        enemy = Enemy{this, name, initialOffset, 10, 5, 5};
+        enemy = Enemy{this, name, initialOffset, 10, 0.05f, 5};
     }
 
     enemy.positionQueue = queuePosition;

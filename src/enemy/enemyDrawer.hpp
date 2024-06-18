@@ -6,7 +6,9 @@
 
 struct EnemyDrawer
 {
-    GLuint _texture{};
+    GLuint _textureMilan{};
+    GLuint _textureGuimiel{};
+    GLuint _textureElea{};
 
     void loadEnemyTexture();
     void drawEnemy(Enemy &enemy);
